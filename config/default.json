@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://gigo1234:divljidetektiv@energcalc.mb3xb.mongodb.net/<dbname>?retryWrites=true&w=majority",
+  "jwtSecret": "mytoken"
+}
