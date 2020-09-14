@@ -10,6 +10,10 @@ import { Provider } from 'react-redux';
 import store from './store';
 import  setAuthToken  from './utils/setAuthToken';
 import { loadUser } from './actions/auth';
+import Buildings from './components/buildings/Buildings';
+import SingleBuilding from './components/buildings/SingleBuilding';
+import PrivateRoute from './components/routing/PrivateRoute';
+import BuildingForm from './components/buildings/BuildingForm';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token)
@@ -34,6 +38,9 @@ const App = () => {
           <Switch>
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <PrivateRoute exact path="/buildings" component={Buildings} />
+            <PrivateRoute exact path='/single-building' component={SingleBuilding} />
+            <PrivateRoute exact path="/new-building" component={BuildingForm} />
           </Switch>
         </section>
       </Fragment>
