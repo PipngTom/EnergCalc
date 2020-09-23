@@ -16,7 +16,32 @@ const BuildingSchema = new mongoose.Schema({
   year: {
     type: Number,
     required: true
-  }
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  trans: [
+    {
+      tip: String,
+      uValue: Number,
+      povI: Number,
+      povZ: Number,
+      povS: Number,
+      povJ: Number,
+      fFactor: Number
+    }
+  ],
+  neTrans: [
+    {
+      tip: String,
+      uValue: Number,
+      povI: Number,
+      povZ: Number,
+      povS: Number,
+      povJ: Number
+    }
+  ]
 });
 
 module.exports = Building = mongoose.model('building', BuildingSchema);
