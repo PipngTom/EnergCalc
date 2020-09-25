@@ -15,6 +15,7 @@ import SingleBuilding from "./components/buildings/SingleBuilding";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import BuildingForm from "./components/buildings/BuildingForm";
 import AddTransparentEl from "./components/buildings/AddTransparentEl";
+import AddUnTransparentEl from "./components/buildings/AddUnTransparentEl";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -51,6 +52,11 @@ const App = () => {
                 exact
                 path="/add-transparent/:_id"
                 component={AddTransparentEl}
+              />
+              <PrivateRoute
+                exact
+                path="/add-untransparent/:_id"
+                component={AddUnTransparentEl}
               />
             </Switch>
           </section>

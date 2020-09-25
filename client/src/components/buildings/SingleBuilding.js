@@ -7,6 +7,7 @@ import {
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import TransEl from "./TransEl";
+import UnTransEl from "./UnTransEl";
 
 const SingleBuilding = ({
   getSingleBuilding,
@@ -56,13 +57,22 @@ const SingleBuilding = ({
           <i className="fab fa-black-tie text-primary"></i> Add Transparent
           Element
         </Link>
-        <Link to="/add-untransparent" className="btn btn-light">
+        <Link
+          to={`/add-untransparent/${match.params._id}`}
+          className="btn btn-light"
+        >
           <i className="fas fa-graduation-cap text-primary"></i> Add
           Untransparent Element
         </Link>
       </div>
       {building && (
         <TransEl element={building.trans} buildingId={building._id}></TransEl>
+      )}
+      {building && (
+        <UnTransEl
+          element={building.neTrans}
+          buildingId={building._id}
+        ></UnTransEl>
       )}
     </Fragment>
   );

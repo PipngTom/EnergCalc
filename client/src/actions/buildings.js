@@ -133,10 +133,60 @@ export const addTransparentEl = (formData, id, history) => async (dispatch) => {
   }
 };
 
+export const addUnTransparentEl = (formData, id, history) => async (
+  dispatch
+) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const res = await axios.post(
+      `/api/buildings/me/ne-trans/${id}`,
+      formData,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_BUILDING,
+      payload: res.data,
+    });
+
+    dispatch(setAlert("UnTransparent Element Added", "success"));
+
+    history.push(`/single-building/${id}`);
+  } catch (err) {
+    dispatch({
+      type: BUILDINGS_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
 export const deleteTransEl = (build_id, trans_id) => async (dispatch) => {
   try {
     const res = await axios.delete(
       `/api/buildings/me/trans/${build_id}/${trans_id}`
+    );
+
+    dispatch({
+      type: UPDATE_BUILDING,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: BUILDINGS_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+export const deleteUnTransEl = (build_id, untrans_id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(
+      `/api/buildings/me/ne-trans/${build_id}/${untrans_id}`
     );
 
     dispatch({

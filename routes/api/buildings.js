@@ -112,6 +112,44 @@ router.post("/me/trans/:id", auth, async (req, res) => {
   }
 });
 
+router.post("/me/ne-trans/:id", auth, async (req, res) => {
+  const { tip, uValue, povI, povZ, povS, povJ } = req.body;
+
+  const newUnTrans = {
+    tip,
+    uValue,
+    povI,
+    povZ,
+    povS,
+    povJ,
+  };
+
+  try {
+    const building = await Building.findOne({ _id: req.params.id });
+    building.neTrans.push(newUnTrans);
+    await building.save();
+    res.json(building);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.delete("/me/ne-trans/:build_id/:untrans_id", auth, async (req, res) => {
+  try {
+    const building = await Building.findOne({ _id: req.params.build_id });
+    const removeIndex = building.neTrans
+      .map((item) => item._id)
+      .indexOf(req.params.untrans_id);
+    building.neTrans.splice(removeIndex, 1);
+    await building.save();
+    res.json(building);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 router.delete("/me/trans/:build_id/:trans_id", auth, async (req, res) => {
   try {
     const building = await Building.findOne({ _id: req.params.build_id });
