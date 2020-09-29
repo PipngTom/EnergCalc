@@ -31,15 +31,18 @@ const AddTransparentEl = ({ addTransparentEl, history, match }) => {
         }}
       >
         <div className="form-group">
-          <h4>Type of Element</h4>
-          <input
-            type="text"
-            placeholder="* Type of Element"
-            onChange={(e) => onChange(e)}
+          <select
+            name="status"
             name="tip"
             value={tip}
-            required
-          />
+            onChange={(e) => onChange(e)}
+          >
+            <option value="0">* Type of Element</option>
+            <option value="Prozor">Prozor</option>
+            <option value="Vrata">Vrata</option>
+            <option value="Balkonska vrata">Balkonska Vrata</option>
+            <option value="Vrata sa staklom">Vrata sa staklom</option>
+          </select>
         </div>
         <div className="form-group">
           <h4>

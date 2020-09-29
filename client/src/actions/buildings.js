@@ -21,7 +21,7 @@ export const getBuildings = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: BUILDINGS_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
+      payload: { msg: err.message },
     });
   }
 };
@@ -37,7 +37,7 @@ export const getAllBuildings = () => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: BUILDINGS_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
+      payload: { msg: err.message },
     });
   }
 };
@@ -52,7 +52,7 @@ export const getSingleBuilding = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: BUILDINGS_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
+      payload: { msg: err.message },
     });
   }
 };
@@ -74,7 +74,7 @@ export const addBuilding = (formData) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: BUILDINGS_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
+      payload: { msg: err.message },
     });
   }
 };
@@ -92,7 +92,7 @@ export const deleteBuilding = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: BUILDINGS_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
+      payload: { msg: err.message },
     });
   }
 };
@@ -128,7 +128,7 @@ export const addTransparentEl = (formData, id, history) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: BUILDINGS_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
+      payload: { msg: err.message },
     });
   }
 };
@@ -160,7 +160,7 @@ export const addUnTransparentEl = (formData, id, history) => async (
   } catch (err) {
     dispatch({
       type: BUILDINGS_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
+      payload: { msg: err.message },
     });
   }
 };
@@ -178,7 +178,7 @@ export const deleteTransEl = (build_id, trans_id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: BUILDINGS_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
+      payload: { msg: err.message },
     });
   }
 };
@@ -196,7 +196,7 @@ export const deleteUnTransEl = (build_id, untrans_id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: BUILDINGS_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
+      payload: { msg: err.message },
     });
   }
 };

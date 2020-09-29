@@ -31,7 +31,11 @@ const Buildings = ({
         <i className="fas fa-calculator"></i>
         Welcome to EnergCalc
       </p>
-      <button type="button" onClick={navigateToForm}>
+      <button
+        type="button"
+        className="btn btn-primary"
+        onClick={navigateToForm}
+      >
         Create New Building
       </button>
       <div className="posts">

@@ -16,6 +16,9 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 import BuildingForm from "./components/buildings/BuildingForm";
 import AddTransparentEl from "./components/buildings/AddTransparentEl";
 import AddUnTransparentEl from "./components/buildings/AddUnTransparentEl";
+import Measures from "./components/buildings/Measures";
+import AddTransMeasure from "./components/buildings/AddTransMeasure";
+import AddUnTransMeasure from "./components/buildings/AddUnTransMeasure";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -57,6 +60,17 @@ const App = () => {
                 exact
                 path="/add-untransparent/:_id"
                 component={AddUnTransparentEl}
+              />
+              <PrivateRoute exact path="/measures" component={Measures} />
+              <PrivateRoute
+                exact
+                path="/add-trans-measure"
+                component={AddTransMeasure}
+              />
+              <PrivateRoute
+                exact
+                path="/add-untrans-measure"
+                component={AddUnTransMeasure}
               />
             </Switch>
           </section>

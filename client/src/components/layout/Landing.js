@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Landing = () => {
   return (
@@ -7,17 +8,20 @@ const Landing = () => {
         <div className="landing-inner">
           <h1 className="x-large">Energy Calculator</h1>
           <p className="lead">
-            Create a developer profile/portfolio, share posts and get help from
-            other developers
+            Calculate a money savings with new packages of isolation
           </p>
           <div className="buttons">
-            <a href="register.html" className="btn btn-primary">Sign Up</a>
-            <a href="login.html" className="btn btn-light">Login</a>
+            <Link to="/register" className="btn btn-primary">
+              Sign Up
+            </Link>
+            <Link to="/login" className="btn btn-light">
+              Login
+            </Link>
           </div>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
 export default Landing;

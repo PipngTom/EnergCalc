@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import TransEl from "./TransEl";
 import UnTransEl from "./UnTransEl";
+import { enerCalc } from "./enerCalc";
 
 const SingleBuilding = ({
   getSingleBuilding,
@@ -44,25 +45,40 @@ const SingleBuilding = ({
             <strong>Volume: </strong>
             {building && building.zap} m<sup>3</sup>
           </p>
+          <p>
+            <strong>Qhnd: </strong>
+            {building && enerCalc(building).Qhint.toFixed(2)} kWh
+          </p>
+          <p>
+            <strong>Qhnd,rel: </strong>
+            {building &&
+              (enerCalc(building).Qhint / building.pov).toFixed(2)}{" "}
+            kWh/m
+            <sup>2</sup>a
+          </p>
+          <p>
+            <strong>Klasa objekta: </strong>
+            {building && enerCalc(building).klasa}
+          </p>
         </div>
       </div>
       <div className="dash-buttons">
         <Link to="/edit-building" className="btn btn-light">
-          <i className="fas fa-user-circle text-primary"></i> Edit Building
+          <i className="far fa-building text-primary"></i> Edit Building
         </Link>
         <Link
           to={`/add-transparent/${match.params._id}`}
           className="btn btn-light"
         >
-          <i className="fab fa-black-tie text-primary"></i> Add Transparent
+          <i className="far fa-door-closed text-primary"></i> Add Transparent
           Element
         </Link>
         <Link
           to={`/add-untransparent/${match.params._id}`}
           className="btn btn-light"
         >
-          <i className="fas fa-graduation-cap text-primary"></i> Add
-          Untransparent Element
+          <i className="fas fa-chimney text-primary"></i> Add Untransparent
+          Element
         </Link>
       </div>
       {building && (

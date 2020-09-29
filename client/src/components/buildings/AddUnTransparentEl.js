@@ -31,15 +31,20 @@ const AddUnTransparentEl = ({ addUnTransparentEl, match, history }) => {
         }}
       >
         <div className="form-group">
-          <h4>Type of Element</h4>
-          <input
-            type="text"
-            placeholder="* Type of Element"
-            onChange={(e) => onChange(e)}
+          <select
+            name="status"
             name="tip"
             value={tip}
-            required
-          />
+            onChange={(e) => onChange(e)}
+          >
+            <option value="0">* Type of Element</option>
+            <option value="Spoljni zid">Spoljni zid</option>
+            <option value="Medjuspratna konstrukcija ispod negrejanog prostora">
+              Medjuspratna konstrukcija ispod negrejanog prostora
+            </option>
+            <option value="Pod na tlu">Pod na tlu</option>
+            <option value="Zid u tlu">Zid u tlu</option>
+          </select>
         </div>
         <div className="form-group">
           <h4>
@@ -54,18 +59,20 @@ const AddUnTransparentEl = ({ addUnTransparentEl, match, history }) => {
             required
           />
         </div>
+        {tip !== "Pod na tlu" && (
+          <div className="form-group">
+            <h4>Surface on East Side</h4>
+            <input
+              type="text"
+              placeholder="* Surface East"
+              value={povI}
+              name="povI"
+              onChange={(e) => onChange(e)}
+            />
+          </div>
+        )}
         <div className="form-group">
-          <h4>Surface on East Side</h4>
-          <input
-            type="text"
-            placeholder="* Surface East"
-            value={povI}
-            name="povI"
-            onChange={(e) => onChange(e)}
-          />
-        </div>
-        <div className="form-group">
-          <h4>Surface on West Side</h4>
+          <h4>{tip !== "Pod na tlu" ? "Surface on West Side" : "Surface"}</h4>
           <input
             type="text"
             name="povZ"
@@ -74,26 +81,32 @@ const AddUnTransparentEl = ({ addUnTransparentEl, match, history }) => {
             value={povZ}
           />
         </div>
-        <div className="form-group">
-          <h4>Surface on North Side</h4>
-          <input
-            type="text"
-            name="povS"
-            placeholder="* Surface North"
-            onChange={(e) => onChange(e)}
-            value={povS}
-          />
-        </div>
-        <div className="form-group">
-          <h4>Surface on South Side</h4>
-          <input
-            type="text"
-            name="povJ"
-            placeholder="* Surface South"
-            onChange={(e) => onChange(e)}
-            value={povJ}
-          />
-        </div>
+
+        {tip !== "Pod na tlu" && (
+          <div className="form-group">
+            <h4>Surface on North Side</h4>
+            <input
+              type="text"
+              name="povS"
+              placeholder="* Surface North"
+              onChange={(e) => onChange(e)}
+              value={povS}
+            />
+          </div>
+        )}
+        {tip !== "Pod na tlu" && (
+          <div className="form-group">
+            <h4>Surface on South Side</h4>
+            <input
+              type="text"
+              name="povJ"
+              placeholder="* Surface South"
+              onChange={(e) => onChange(e)}
+              value={povJ}
+            />
+          </div>
+        )}
+
         <input type="submit" className="btn btn-primary my-1" />
         <a className="btn btn-light my-1" href="dashboard.html">
           Go Back
