@@ -31,10 +31,12 @@ const AddUnTransMeasure = ({ addUnTransMeasure, history }) => {
         <div className="form-group">
           <select name="tip" value={tip} onChange={(e) => onChange(e)}>
             <option value="0">* Type of Element</option>
-            <option value="Prozor">Prozor</option>
-            <option value="Vrata">Vrata</option>
-            <option value="Balkonska vrata">Balkonska Vrata</option>
-            <option value="Vrata sa staklom">Vrata sa staklom</option>
+            <option value="Spoljni zid">Spoljni zid</option>
+            <option value="Medjuspratna konstrukcija ispod negrejanog prostora">
+              Medjuspratna konstrukcija ispod negrejanog prostora
+            </option>
+            <option value="Pod na tlu">Pod na tlu</option>
+            <option value="Zid u tlu">Zid u tlu</option>
           </select>
         </div>
         <div className="form-group">

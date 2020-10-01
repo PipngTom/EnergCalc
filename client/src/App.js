@@ -19,6 +19,7 @@ import AddUnTransparentEl from "./components/buildings/AddUnTransparentEl";
 import Measures from "./components/buildings/Measures";
 import AddTransMeasure from "./components/buildings/AddTransMeasure";
 import AddUnTransMeasure from "./components/buildings/AddUnTransMeasure";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
