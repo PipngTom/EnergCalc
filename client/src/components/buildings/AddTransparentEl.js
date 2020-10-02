@@ -2,19 +2,22 @@ import React, { Fragment, useState } from "react";
 import { addTransparentEl } from "../../actions/buildings";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const AddTransparentEl = ({ addTransparentEl, history, match }) => {
   const [formData, setFormData] = useState({
     tip: "",
+    opis: "",
     uValue: 0,
     povI: 0,
     povZ: 0,
     povS: 0,
     povJ: 0,
     fFactor: 0,
+    g: 0,
   });
 
-  const { tip, uValue, povI, povZ, povS, povJ, fFactor } = formData;
+  const { tip, opis, uValue, povI, povZ, povS, povJ, fFactor, g } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -43,6 +46,17 @@ const AddTransparentEl = ({ addTransparentEl, history, match }) => {
             <option value="Balkonska vrata">Balkonska Vrata</option>
             <option value="Vrata sa staklom">Vrata sa staklom</option>
           </select>
+        </div>
+        <div className="form-group">
+          <h4>Description</h4>
+          <input
+            type="text"
+            placeholder="* Description"
+            name="opis"
+            value={opis}
+            onChange={(e) => onChange(e)}
+            required
+          />
         </div>
         <div className="form-group">
           <h4>
@@ -107,10 +121,23 @@ const AddTransparentEl = ({ addTransparentEl, history, match }) => {
             value={fFactor}
           />
         </div>
+        <div className="form-group">
+          <h4>gValue</h4>
+          <input
+            type="text"
+            placeholder="* gValue"
+            name="g"
+            onChange={(e) => onChange(e)}
+            value={g}
+          />
+        </div>
         <input type="submit" className="btn btn-primary my-1" />
-        <a className="btn btn-light my-1" href="dashboard.html">
+        <Link
+          className="btn btn-light my-1"
+          to={`/single-building/${match.params._id}`}
+        >
           Go Back
-        </a>
+        </Link>
       </form>
     </Fragment>
   );

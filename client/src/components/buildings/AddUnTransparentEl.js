@@ -2,10 +2,12 @@ import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addUnTransparentEl } from "../../actions/buildings";
+import { Link } from "react-router-dom";
 
 const AddUnTransparentEl = ({ addUnTransparentEl, match, history }) => {
   const [formData, seFormData] = useState({
     tip: "",
+    opis: "",
     uValue: 0,
     povI: 0,
     povZ: 0,
@@ -13,7 +15,7 @@ const AddUnTransparentEl = ({ addUnTransparentEl, match, history }) => {
     povJ: 0,
   });
 
-  const { tip, uValue, povI, povZ, povS, povJ } = formData;
+  const { tip, opis, uValue, povI, povZ, povS, povJ } = formData;
 
   const onChange = (e) => {
     seFormData({ ...formData, [e.target.name]: e.target.value });
@@ -45,6 +47,17 @@ const AddUnTransparentEl = ({ addUnTransparentEl, match, history }) => {
             <option value="Pod na tlu">Pod na tlu</option>
             <option value="Zid u tlu">Zid u tlu</option>
           </select>
+        </div>
+        <div className="form-group">
+          <h4>Description</h4>
+          <input
+            type="text"
+            placeholder="* Description"
+            name="opis"
+            value={opis}
+            onChange={(e) => onChange(e)}
+            required
+          />
         </div>
         <div className="form-group">
           <h4>
@@ -108,9 +121,12 @@ const AddUnTransparentEl = ({ addUnTransparentEl, match, history }) => {
         )}
 
         <input type="submit" className="btn btn-primary my-1" />
-        <a className="btn btn-light my-1" href="dashboard.html">
+        <Link
+          className="btn btn-light my-1"
+          to={`/single-building/${match.params._id}`}
+        >
           Go Back
-        </a>
+        </Link>
       </form>
     </Fragment>
   );

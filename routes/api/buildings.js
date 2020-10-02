@@ -47,6 +47,11 @@ router.post("/me", auth, async (req, res) => {
       zap: req.body.zap,
       year: req.body.year,
       name: req.body.name,
+      vent: req.body.vent,
+      dPrekid: req.body.dPrekid,
+      nPrekid: req.body.nPrekid,
+      mPrekid: req.body.mPrekid,
+      tipGradnje: req.body.tipGradnje,
     });
 
     const post = await newBuilding.save();
@@ -86,16 +91,18 @@ router.get("/me/:id", async (req, res) => {
 });
 
 router.post("/me/trans/:id", auth, async (req, res) => {
-  const { tip, uValue, povI, povZ, povS, povJ, fFactor } = req.body;
+  const { tip, opis, uValue, povI, povZ, povS, povJ, fFactor, g } = req.body;
 
   const newTrans = {
     tip,
+    opis,
     uValue,
     povI,
     povZ,
     povS,
     povJ,
     fFactor,
+    g,
   };
 
   try {
@@ -113,10 +120,11 @@ router.post("/me/trans/:id", auth, async (req, res) => {
 });
 
 router.post("/me/ne-trans/:id", auth, async (req, res) => {
-  const { tip, uValue, povI, povZ, povS, povJ } = req.body;
+  const { tip, opis, uValue, povI, povZ, povS, povJ } = req.body;
 
   const newUnTrans = {
     tip,
+    opis,
     uValue,
     povI,
     povZ,

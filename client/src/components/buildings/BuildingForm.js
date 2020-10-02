@@ -2,7 +2,7 @@ import React, { useState, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addBuilding } from "../../actions/buildings";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 const BuildingForm = ({ addBuilding }) => {
   const [allValues, setAllValues] = useState({
@@ -10,7 +10,24 @@ const BuildingForm = ({ addBuilding }) => {
     zap: 0,
     year: 0,
     name: "",
+    vent: 0,
+    dPrekid: 0,
+    nPrekid: 0,
+    mPrekid: 0,
+    tipGradnje: "",
   });
+
+  const {
+    pov,
+    zap,
+    year,
+    name,
+    vent,
+    dPrekid,
+    nPrekid,
+    mPrekid,
+    tipGradnje,
+  } = allValues;
 
   const changeHandler = (e) => {
     setAllValues({ ...allValues, [e.target.name]: e.target.value });
@@ -30,33 +47,17 @@ const BuildingForm = ({ addBuilding }) => {
         className="form"
         onSubmit={(e) => {
           e.preventDefault();
-          console.log(allValues);
           addBuilding(allValues);
           history.push("buildings");
         }}
       >
-        {/* <div className="form-group">
-          <select name="status">
-            <option value="0">* Select Professional Status</option>
-            <option value="Developer">Developer</option>
-            <option value="Junior Developer">Junior Developer</option>
-            <option value="Senior Developer">Senior Developer</option>
-            <option value="Manager">Manager</option>
-            <option value="Student or Learning">Student or Learning</option>
-            <option value="Instructor">Instructor or Teacher</option>
-            <option value="Intern">Intern</option>
-            <option value="Other">Other</option>
-          </select>
-          <small className="form-text">
-            Give us an idea of where you are at in your career
-          </small>
-        </div> */}
         <div className="form-group">
           <input
             type="text"
             placeholder="Name of Building"
             name="name"
-            onChange={changeHandler}
+            value={name}
+            onChange={(e) => changeHandler(e)}
           />
           <small className="form-text">Please enter the name of Building</small>
         </div>
@@ -65,22 +66,18 @@ const BuildingForm = ({ addBuilding }) => {
             type="text"
             placeholder="Surface"
             name="pov"
-            onChange={changeHandler}
+            value={pov}
+            onChange={(e) => changeHandler(e)}
           />
           <small className="form-text">Please enter surface of Building</small>
         </div>
-        {/* <div className="form-group">
-          <input type="text" placeholder="Location" name="location" />
-          <small className="form-text">
-            City & state suggested (eg. Boston, MA)
-          </small>
-        </div> */}
         <div className="form-group">
           <input
             type="text"
             placeholder="* Volume"
             name="zap"
-            onChange={changeHandler}
+            value={zap}
+            onChange={(e) => changeHandler(e)}
           />
           <small className="form-text">Please enter volume of Building</small>
         </div>
@@ -89,52 +86,75 @@ const BuildingForm = ({ addBuilding }) => {
             type="text"
             placeholder="Year of construction"
             name="year"
-            onChange={changeHandler}
+            value={year}
+            onChange={(e) => changeHandler(e)}
           />
           <small className="form-text">
             Please enter a year of construction
           </small>
         </div>
-        {/* <div className="form-group">
-          <textarea placeholder="A short bio of yourself" name="bio"></textarea>
-          <small className="form-text">Tell us a little about yourself</small>
-        </div> */}
-
-        {/* <div className="my-2">
-          <button type="button" className="btn btn-light">
-            Add Social Network Links
-          </button>
-          <span>Optional</span>
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Ventilation"
+            name="vent"
+            value={vent}
+            onChange={(e) => changeHandler(e)}
+          />
         </div>
-
-        <div className="form-group social-input">
-          <i className="fab fa-twitter fa-2x"></i>
-          <input type="text" placeholder="Twitter URL" name="twitter" />
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Daily"
+            name="dPrekid"
+            value={dPrekid}
+            onChange={(e) => changeHandler(e)}
+          />
+          <small className="form-text">
+            Please enter a year of construction
+          </small>
         </div>
-
-        <div className="form-group social-input">
-          <i className="fab fa-facebook fa-2x"></i>
-          <input type="text" placeholder="Facebook URL" name="facebook" />
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Weekly"
+            name="nPrekid"
+            value={nPrekid}
+            onChange={(e) => changeHandler(e)}
+          />
+          <small className="form-text">
+            Please enter a year of construction
+          </small>
         </div>
-
-        <div className="form-group social-input">
-          <i className="fab fa-youtube fa-2x"></i>
-          <input type="text" placeholder="YouTube URL" name="youtube" />
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Monthly"
+            name="mPrekid"
+            value={mPrekid}
+            onChange={(e) => changeHandler(e)}
+          />
+          <small className="form-text">
+            Please enter a year of construction
+          </small>
         </div>
-
-        <div className="form-group social-input">
-          <i className="fab fa-linkedin fa-2x"></i>
-          <input type="text" placeholder="Linkedin URL" name="linkedin" />
+        <div className="form-group">
+          <select
+            name="tipGradnje"
+            value={tipGradnje}
+            onChange={(e) => changeHandler(e)}
+          >
+            <option value="0">Type of building</option>
+            <option value="Srednji">Srednji</option>
+            <option value="Teski">Teski</option>
+            <option value="Laki">Laki</option>
+          </select>
+          <small className="form-text">Choose your type...</small>
         </div>
-
-        <div className="form-group social-input">
-          <i className="fab fa-instagram fa-2x"></i>
-          <input type="text" placeholder="Instagram URL" name="instagram" />
-        </div> */}
         <input type="submit" className="btn btn-primary my-1" />
-        <a className="btn btn-light my-1" href="dashboard.html">
+        <Link className="btn btn-light my-1" to={"/buildings"}>
           Go Back
-        </a>
+        </Link>
       </form>
     </section>
   );

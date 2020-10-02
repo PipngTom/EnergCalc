@@ -7,11 +7,9 @@ const UnTransEl = ({ element, buildingId, deleteUnTransEl }) => {
   const elements = element.map((el) => (
     <tr key={el._id}>
       <td>{el.tip}</td>
+      <td>{el.opis}</td>
       <td>{el.uValue}</td>
-      <td>{el.povI}</td>
-      <td>{el.povZ}</td>
-      <td>{el.povS}</td>
-      <td>{el.povJ}</td>
+      <td>{el.povI + el.povZ + el.povS + el.povJ}</td>
       <td>
         <button
           className="btn btn-danger"
@@ -30,11 +28,9 @@ const UnTransEl = ({ element, buildingId, deleteUnTransEl }) => {
         <thead>
           <tr>
             <th>Type of Element</th>
+            <th>Description</th>
             <th>uValue</th>
-            <th className="hide-sm">Surface E</th>
-            <th className="hide-sm">Surface W</th>
-            <th className="hide-sm">Surface N</th>
-            <th className="hide-sm">Surface S</th>
+            <th className="hide-sm">Surface</th>
             <th />
           </tr>
         </thead>
