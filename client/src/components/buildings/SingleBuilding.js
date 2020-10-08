@@ -31,7 +31,9 @@ const SingleBuilding = ({
     };
   }, [getSingleBuilding]);
 
-  const [tabs, setTabs] = useState([]);
+  const proba = [];
+
+  const [tabs, setTabs] = useState([...proba]);
 
   const [actKey, setActKey] = useState("details");
 
@@ -124,17 +126,24 @@ const SingleBuilding = ({
           )}
         </Tab>
 
-        {tabs.map((item, index) => {
+        {proba.map((item, index) => {
           return (
-            <Tab
-              key={index}
-              eventKey={index}
-              title={"Paket" + (index + 1).toString()}
-            >
-              <Package building={building}></Package>
-            </Tab>
-          );
+            <Tab key={index} title={"Paket" + (index + 1).toString()}></Tab>
+          )
         })}
+        {tabs.map((item, index) => {
+          if (index >= proba.length)
+            return (
+              <Tab
+                key={index}
+                eventKey={index}
+                title={"Paket" + (index + 1).toString()}
+              >
+                <Package building={building}></Package>
+              </Tab>
+            );
+        })}
+
         <Tab eventKey="new" title="+"></Tab>
       </Tabs>
     </Fragment>

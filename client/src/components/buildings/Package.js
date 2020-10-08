@@ -17,6 +17,7 @@ const Package = ({ building }) => {
   const [sumTrans, setSumTrans] = useState(null);
   const [newBuild, setNewBuilding] = useState(_.cloneDeep(building));
   const [IdpairsUnTrans, setIdpairsUnTrans] = useState(null);
+  const [IdpairsTrans, setIdpairsTrans] = useState(null);
 
   const setUvalues = (val, tip) => {
     if (tip === "UN") {
@@ -44,6 +45,7 @@ const Package = ({ building }) => {
       <TransElMeas
         element={building.trans}
         getSum={(sum) => setSumTrans(sum)}
+        getIdpairs={(idpairs) => setIdpairsTrans(idpairs)}
         getUvalues={(val, tip) => setUvalues(val, tip)}
       ></TransElMeas>
       <UnTransElMeas
@@ -84,10 +86,15 @@ const Package = ({ building }) => {
           </Col>
         </Row>
       </Container>
-      {IdpairsUnTrans &&
-        IdpairsUnTrans.map((item) => {
-          return <div>{item.idMeas}</div>;
+      {IdpairsTrans &&
+        IdpairsTrans.map((item, index) => {
+          return <div key={index}>Trans {item.idMeas}</div>;
         })}
+      {IdpairsUnTrans &&
+        IdpairsUnTrans.map((item, index) => {
+          return <div key={index}>Netrans {item.idMeas}</div>;
+        })}
+
     </Fragment>
   );
 };

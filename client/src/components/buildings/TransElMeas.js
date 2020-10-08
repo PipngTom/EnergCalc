@@ -3,9 +3,14 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Semafor } from "./Semafor";
 
-const TransElMeas = ({ element, measures, getSum, getUvalues }) => {
+const TransElMeas = ({ element, measures, getSum, getUvalues, getIdpairs }) => {
   const [newValues, setNewValues] = useState(
     element.map((item) => item.uValue)
+  );
+  const [Idpairs, setIdpairs] = useState(
+    element.map((item) => {
+      return { idEl: item._id, idMeas: 0 };
+    })
   );
   const [newPrices, setNewPrices] = useState(element.map((item) => 0));
   const [sum, setSum] = useState(0);
@@ -18,10 +23,32 @@ const TransElMeas = ({ element, measures, getSum, getUvalues }) => {
     }
     setSum(sumFor);
     getSum(sumFor);
+    getIdpairs(Idpairs);
     getUvalues(newValues, "TR");
   }, [newPrices]);
 
   const onChange = (e, elIndex) => {
+    setIdpairs(
+      element.map((item, index) => {
+        if (index === elIndex && e.target.value === "k") {
+          return {
+            idEl: item._id,
+            idMeas: 0,
+          };
+        }
+        if (index === elIndex && e.target.value !== "k") {
+          return {
+            idEl: item._id,
+            idMeas: measures[e.target.value]._id,
+          };
+        } else {
+          return {
+            idEl: Idpairs[index].idEl,
+            idMeas: Idpairs[index].idMeas,
+          };
+        }
+      })
+    );
     setNewValues(
       newValues.map((item, index) => {
         if (index === elIndex && e.target.value === "k") {
@@ -59,7 +86,7 @@ const TransElMeas = ({ element, measures, getSum, getUvalues }) => {
       <td>{el.uValue}</td>
       <td>{el.povI + el.povZ + el.povS + el.povJ}</td>
       <td>
-        <select onChange={(e) => onChange(e, elIndex)}>
+        <select onChange={(e) => onChange(e, elIndex)} >
           <option value="k">* Select measure</option>
           {measures.map((item, index) => {
             if (item.tip === el.tip) {
