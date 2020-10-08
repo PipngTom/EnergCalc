@@ -2,13 +2,22 @@ import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { deleteUnTransEl } from "../../actions/buildings";
 import PropTypes from "prop-types";
+import { Semafor } from "./Semafor";
 
 const UnTransEl = ({ element, buildingId, deleteUnTransEl }) => {
   const elements = element.map((el) => (
     <tr key={el._id}>
       <td>{el.tip}</td>
       <td>{el.opis}</td>
-      <td>{el.uValue}</td>
+      <td
+        style={
+          Semafor.find((item) => item.name === el.tip).pos <= el.uValue
+            ? { backgroundColor: "red" }
+            : {}
+        }
+      >
+        {el.uValue}
+      </td>
       <td>{el.povI + el.povZ + el.povS + el.povJ}</td>
       <td>
         <button

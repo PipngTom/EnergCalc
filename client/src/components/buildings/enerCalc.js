@@ -2,6 +2,11 @@ export const enerCalc = (building) => {
   //if (building.trans && building.neTrans) return 0;
   const HDD = [124, 459, 653, 720, 563, 455, 126];
   const danaMesec = [15, 30, 31, 31, 28, 31, 15];
+  const tipGradnje = [
+    { name: "Teski", value: 260000 },
+    { name: "Srednji", value: 165000 },
+    { name: "Laki", value: 110000 },
+  ];
   const clasaObjekta = [
     { name: "A+", from: 0, to: 12 },
     { name: "A", from: 12, to: 20 },
@@ -21,13 +26,39 @@ export const enerCalc = (building) => {
     { H: 103.86, J: 96.43, S: 36.04, I: 79.8, Z: 79.8 },
     { H: 133.65, J: 86.73, S: 44.64, I: 96.05, Z: 96.05 },
   ];
+  const fKorekcije = [
+    { name: "Spoljni zid", fx: 1 },
+    { name: "Zid prema negrejanom prostoru", fx: 0.5 },
+    {
+      name: "Medjuspratna konstrukcija ispod negrejanog prostora",
+      fx: 0.8,
+    },
+    {
+      name: "Medjuspratna konstrukcija iznad negrejanog prostora",
+      fx: 0.5,
+    },
+    { name: "Zid u tlu", fx: 0.6 },
+    { name: "Pod na tlu", fx: 0.5 },
+    { name: "Ravan krov iznad grejanog prostora", fx: 1 },
+    { name: "Kosi krov iznad grejanog prostora", fx: 1 },
+    {
+      name: "Medjuspratna konstrukcija iznad otvorenog prolaza",
+      fx: 1,
+    },
+    { name: "Prozor", fx: 1 },
+    { name: "Vrata", fx: 1 },
+    { name: "Balkonska vrata", fx: 1 },
+    { name: "Vrata sa staklom", fx: 1 },
+  ];
   const prisutnost = 12;
   const odavanjePoPov = 1.8;
   const potrosnjaUredj = 30;
-  const brojIzmenaVaz = 0.5;
-  const tipObjekta = 165000;
-  const dnevniPrekid = 8;
-  const nedeljniPrekid = 2;
+  const brojIzmenaVaz = building.vent;
+  const tipObjekta = tipGradnje.find((item) => {
+    return item.name === building.tipGradnje;
+  }).value;
+  const dnevniPrekid = building.dPrekid;
+  const nedeljniPrekid = building.nPrekid;
   const Qhnd = [0, 0, 0, 0, 0, 0, 0];
   const Qtrans = [0, 0, 0, 0, 0, 0, 0];
   const Qvent = [0, 0, 0, 0, 0, 0, 0];
@@ -39,10 +70,7 @@ export const enerCalc = (building) => {
   const ni = [0, 0, 0, 0, 0, 0, 0];
   const aRed = [0, 0, 0, 0, 0, 0, 0];
   const Qhndint = [0, 0, 0, 0, 0, 0, 0];
-  const netrans = [
-    { tip: "spoljni zid", uValue: 1, povI: 10, povJ: 10, povS: 10, povZ: 10 },
-    { tip: "zid u tlu", uValue: 1, povI: 10, povJ: 10, povS: 10, povZ: 10 },
-  ];
+
   let povOm = 0;
   let Ht = 0;
   let Htb = 0;
@@ -60,7 +88,9 @@ export const enerCalc = (building) => {
     building.neTrans.map((item) => {
       const pov = item.povI + item.povZ + item.povS + item.povJ;
       povOm = povOm + pov;
-      Ht = Ht + pov * item.uValue;
+      Ht =
+        Ht +
+        pov * item.uValue * fKorekcije.find((el) => el.name === item.tip).fx;
     });
   }
 
@@ -92,7 +122,7 @@ export const enerCalc = (building) => {
             zra.Z * item.povZ) *
             0.9 *
             item.fFactor *
-            0.7;
+            item.g;
       });
     });
   }
