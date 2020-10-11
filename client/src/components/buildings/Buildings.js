@@ -43,10 +43,12 @@ const Buildings = ({
       >
         Create New Building
       </button>
-      <div className="posts">
-        {buildings.map((build) => (
-          <BuildingItem key={build._id} building={build} />
-        ))}
+      <div className="posts d-flex flex-wrap">
+        <div className="row">
+          {buildings.map((build) => (
+            <BuildingItem key={build._id} building={build} />
+          ))}
+        </div>
       </div>
     </Fragment>
   );

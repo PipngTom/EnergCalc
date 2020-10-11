@@ -115,10 +115,10 @@ const TransElMeas = ({ element, measures, getSum, getUvalues, getIdpairs, packag
     }
 
 
-    console.log("paket broj: ", packageNum);
+    /* console.log("paket broj: ", packageNum);
     console.log(el.opis);
     console.log("ID MERE: ", idMere)
-    console.log(indexMere);
+    console.log(indexMere); */
 
     return (
       <tr key={el._id}>

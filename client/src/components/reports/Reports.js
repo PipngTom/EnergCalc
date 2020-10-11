@@ -58,10 +58,13 @@ const Reports = ({
                     <tr>
                         <th>Naziv objekta</th>
                         <th>Povrsina</th>
-                        <th className="hide-sm">Qhnd</th>
+                        <th className="hide-sm">Qhnd [kWh]</th>
                         <th className="hide-sm">Klasa</th>
-                        <th className="hide-sm">Usteda u paketu {packageNum}</th>
+                        <th className="hide-sm">Usteda u paketu {packageNum} [kWh]</th>
+                        <th className="hide-sm">Usteda u paketu {packageNum} [EUR]</th>
                         <th className="hide-sm">Klasa u paketu {packageNum}</th>
+                        <th className="hide-sm">Investicija za paket {packageNum} [EUR]</th>
+                        <th className="hide-sm">Period povrata za paket {packageNum} [GOD]</th>
                     </tr>
                 </thead>
                 <tbody>{elements}</tbody>

@@ -23,7 +23,7 @@ const Measures = ({
         <i className="far fa-home text-primary"></i> Add New Transparent Measure
       </Link>
       <Link to={"/add-untrans-measure"} className="btn btn-light">
-        <i className="fas fa-home text-primary"></i> Add New UnTransparent
+        <i className="fas fa-home text-primary"></i> Add New Non-Transparent
         Measure
       </Link>
       {measures && <TransMeas element={measures}></TransMeas>}

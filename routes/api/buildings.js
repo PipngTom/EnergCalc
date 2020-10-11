@@ -210,6 +210,33 @@ router.post("/me/packages/:id", auth, async (req, res) => {
       //console.log(item);
 
     })
+
+    packages.map((item) => {//iteracija kroz paket
+      item.arrUnTrans.map((el) => {//iteracija kroz transparentne elemente
+        console.log("Id elementa: ", el.idEl, "Id mere: ", el.idMeas);
+        let addIndex = building.neTrans.map((item1) => item1._id).indexOf(el.idEl); //pronalazenje indeksa odgovarajuceg transparentnog elementa u zgradi
+        let measIndex = building.neTrans[addIndex].meas.findIndex((item2) => item2.paket === item.num); //pronalazenje indexa objekta mere u nizu mera
+        if (measIndex === -1)//ako u nizu mera ne pronadje onu sa tim brojem paketa
+        {
+          building.neTrans[addIndex].meas.push({      //dodaje u niz mera za taj element objekat koji sadrzi broj paketa i id mere
+            paket: item.num, mera: el.idMeas
+          })
+        } else {
+          console.log("USAOOOOOOOO")
+          console.log("Bio ID mere: ", building.neTrans[addIndex].meas[measIndex].mera)
+          building.neTrans[addIndex].meas.splice(measIndex, 1);
+          building.neTrans[addIndex].meas.push({      //dodaje u niz mera za taj element objekat koji sadrzi broj paketa i id mere
+            paket: item.num, mera: el.idMeas
+          })
+          //       building.trans[addIndex].meas[measIndex].mera = el.idMeas; //pronadjen je element koji ima isti naziv paketa i tada se samo azurira id mere
+          console.log("Sada je ID mere: ", building.neTrans[addIndex].meas[measIndex].mera)
+        }
+
+      })
+
+      //console.log(item);
+
+    })
     await building.save();
     res.json(building);
 

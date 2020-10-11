@@ -23,7 +23,7 @@ const AddUnTransparentEl = ({ addUnTransparentEl, match, history }) => {
 
   return (
     <Fragment>
-      <h1 className="large text-primary">Add An Inransparent Element</h1>
+      <h1 className="large text-primary">Add An Non-transparent Element</h1>
       <small>* = required field</small>
       <form
         className="form"

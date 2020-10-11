@@ -12,6 +12,7 @@ import UnTransEl from "./UnTransEl";
 import { enerCalc } from "./enerCalc";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
+import Button from "react-bootstrap/Button";
 import Package from "./Package";
 import { getAllTransMes, getAllUntransMeas } from "../../actions/measures";
 
@@ -51,11 +52,11 @@ const SingleBuilding = ({
 
   return (
     <Fragment>
-      <button onClick={(e) => {
+      <Button variant="primary" size="lg" onClick={(e) => {
         e.preventDefault();
         //getSingleBuilding(match.params._id);
         sendMeasuresArray(measures, building._id);
-      }}>Save Packages</button>
+      }}>Save Packages</Button>
       <Tabs
         activeKey={actKey}
         onSelect={(k) => {
@@ -121,7 +122,7 @@ const SingleBuilding = ({
               to={`/add-untransparent/${match.params._id}`}
               className="btn btn-light"
             >
-              <i className="fas fa-chimney text-primary"></i> Add Untransparent
+              <i className="fas fa-chimney text-primary"></i> Add Non-transparent
               Element
             </Link>
           </div>

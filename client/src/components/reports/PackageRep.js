@@ -67,6 +67,7 @@ const PackageRep = ({ building, packageNum, addMeasuresArray, izv }) => {
                 ></TransElMeas>
                 <UnTransElMeas
                     element={building.neTrans}
+                    packageNum={packageNum}
                     getSum={(sum) => setSumUnTrans(sum)}
                     getIdpairs={(idpairs) => setIdpairsUnTrans(idpairs)}
                     getUvalues={(val, tip) => setUvalues(val, tip)}
@@ -112,8 +113,8 @@ const PackageRep = ({ building, packageNum, addMeasuresArray, izv }) => {
                         return <div key={index}>Netrans {item.idMeas}</div>;
                     })}
             </div>)}
-            {izvestaj && (<Fragment><td>{(enerCalc(building).Qhint - rez.Qhint).toFixed(0)}</td>
-                <td>{rez.klasa}</td></Fragment>)}
+            {izvestaj && (<Fragment><td>{(enerCalc(building).Qhint - rez.Qhint).toFixed(0)}</td><td>{((enerCalc(building).Qhint - rez.Qhint) * 0.067).toFixed(0)}</td>
+                <td>{rez.klasa}</td><td>{sumUnTrans + sumTrans}</td><td>{enerCalc(building).Qhint !== rez.Qhint && ((sumUnTrans + sumTrans) / ((enerCalc(building).Qhint - rez.Qhint) * 0.067)).toFixed(2)}</td></Fragment>)}
         </Fragment>
     );
 };

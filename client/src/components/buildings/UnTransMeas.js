@@ -34,7 +34,7 @@ const UnTransMeas = ({ element, deleteUnTransMes }) => {
 
   return (
     <Fragment>
-      <h2 className="my-2">UnTransparent Measures</h2>
+      <h2 className="my-2">Non-Transparent Measures</h2>
       <table className="table">
         <thead>
           <tr>

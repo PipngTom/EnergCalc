@@ -13,38 +13,40 @@ const BuildingItem = ({ deleteBuilding, auth, building }) => {
   const { Qhint, klasa } = enerCalc(building);
   return (
     <Fragment>
-      <Card style={{ width: "18rem" }}>
-        <Card.Img
-          variant="top"
-          src="https://pixnio.com/free-images/2019/08/10/2019-08-10-08-48-13-1200x800.jpg"
-        />
-        <Card.Body>
-          <Card.Title>{building && building.name}</Card.Title>
-          <div>
-            <p>Qhnd: {building && Qhint.toFixed(2)} kWh</p>
-            <p>
-              Qhnd,rel: {building && (Qhint / building.pov).toFixed(2)} kWh/m
-              <sup>2</sup>a
-            </p>
-            <p>Class of object: {klasa}</p>
-          </div>
-          <Link
-            to={`/single-building/${building._id}`}
-            className="btn btn-primary"
-          >
-            View Details
-          </Link>
-          {auth.isAuthenticated && (
-            <Button
-              variant="primary"
-              className="btn btn-danger"
-              onClick={(e) => deleteBuilding(building._id)}
+      <div className="col-4">
+        <Card>
+          <Card.Img
+            variant="top"
+            src="https://pixnio.com/free-images/2019/08/10/2019-08-10-08-48-13-1200x800.jpg"
+          />
+          <Card.Body>
+            <Card.Title>{building && building.name}</Card.Title>
+            <div>
+              <p>Qhnd: {building && Qhint.toFixed(2)} kWh</p>
+              <p>
+                Qhnd,rel: {building && (Qhint / building.pov).toFixed(2)} kWh/m
+                <sup>2</sup>a
+              </p>
+              <p>Class of object: {klasa}</p>
+            </div>
+            <Link
+              to={`/single-building/${building._id}`}
+              className="btn btn-primary"
             >
-              <i className="fas fa-times"></i>
-            </Button>
-          )}
-        </Card.Body>
-      </Card>
+              View Details
+            </Link>
+            {auth.isAuthenticated && (
+              <Button
+                variant="primary"
+                className="btn btn-danger"
+                onClick={(e) => deleteBuilding(building._id)}
+              >
+                <i className="fas fa-times"></i>
+              </Button>
+            )}
+          </Card.Body>
+        </Card>
+      </div>
     </Fragment>
   );
 };

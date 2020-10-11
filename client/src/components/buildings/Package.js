@@ -58,6 +58,7 @@ const Package = ({ building, packageNum, addMeasuresArray }) => {
       ></TransElMeas>
       <UnTransElMeas
         element={building.neTrans}
+        packageNum={packageNum}
         getSum={(sum) => setSumUnTrans(sum)}
         getIdpairs={(idpairs) => setIdpairsUnTrans(idpairs)}
         getUvalues={(val, tip) => setUvalues(val, tip)}
