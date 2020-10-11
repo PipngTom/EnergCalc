@@ -32,6 +32,7 @@ const BuildingSchema = new mongoose.Schema({
       povJ: Number,
       fFactor: Number,
       g: Number,
+      meas: []
     },
   ],
   neTrans: [
@@ -43,6 +44,7 @@ const BuildingSchema = new mongoose.Schema({
       povZ: Number,
       povS: Number,
       povJ: Number,
+      meas: []
     },
   ],
   vent: {

@@ -173,4 +173,50 @@ router.delete("/me/trans/:build_id/:trans_id", auth, async (req, res) => {
   }
 });
 
+router.post("/me/packages/:id", auth, async (req, res) => {
+  //console.log(req.body);
+  //console.log(req.params.id)
+  const packages = req.body;
+  //const { arrTrans, arrUnTrans, num } = req.body
+
+
+
+  try {
+    const building = await Building.findOne({ _id: req.params.id });
+    // console.log(building.trans);
+    packages.map((item) => {//iteracija kroz paket
+      item.arrTrans.map((el) => {//iteracija kroz transparentne elemente
+        console.log("Id elementa: ", el.idEl, "Id mere: ", el.idMeas);
+        let addIndex = building.trans.map((item1) => item1._id).indexOf(el.idEl); //pronalazenje indeksa odgovarajuceg transparentnog elementa u zgradi
+        let measIndex = building.trans[addIndex].meas.findIndex((item2) => item2.paket === item.num); //pronalazenje indexa objekta mere u nizu mera
+        if (measIndex === -1)//ako u nizu mera ne pronadje onu sa tim brojem paketa
+        {
+          building.trans[addIndex].meas.push({      //dodaje u niz mera za taj element objekat koji sadrzi broj paketa i id mere
+            paket: item.num, mera: el.idMeas
+          })
+        } else {
+          console.log("USAOOOOOOOO")
+          console.log("Bio ID mere: ", building.trans[addIndex].meas[measIndex].mera)
+          building.trans[addIndex].meas.splice(measIndex, 1);
+          building.trans[addIndex].meas.push({      //dodaje u niz mera za taj element objekat koji sadrzi broj paketa i id mere
+            paket: item.num, mera: el.idMeas
+          })
+          //       building.trans[addIndex].meas[measIndex].mera = el.idMeas; //pronadjen je element koji ima isti naziv paketa i tada se samo azurira id mere
+          console.log("Sada je ID mere: ", building.trans[addIndex].meas[measIndex].mera)
+        }
+
+      })
+
+      //console.log(item);
+
+    })
+    await building.save();
+    res.json(building);
+
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;

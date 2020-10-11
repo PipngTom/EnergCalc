@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {
   getSingleBuilding,
   clearSingleBuilding,
+  sendMeasuresArray
 } from "../../actions/buildings";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -17,25 +18,32 @@ import { getAllTransMes, getAllUntransMeas } from "../../actions/measures";
 const SingleBuilding = ({
   getSingleBuilding,
   clearSingleBuilding,
+  sendMeasuresArray,
   getAllTransMes,
   getAllUntransMeas,
   match,
-  buildings: { building },
+  buildings: { building, measures },
 }) => {
+
+  const [tabs, setTabs] = useState([]);
+
+  const [actKey, setActKey] = useState("details");
+
   useEffect(() => {
     getSingleBuilding(match.params._id);
     getAllTransMes();
     getAllUntransMeas();
+
     return () => {
       clearSingleBuilding();
     };
   }, [getSingleBuilding]);
 
-  const proba = [];
-
-  const [tabs, setTabs] = useState([...proba]);
-
-  const [actKey, setActKey] = useState("details");
+  useEffect(() => {
+    if (building && building.trans.length !== 0) {
+      setTabs(building.trans[0].meas.map(() => 1));
+    }
+  }, [building]);
 
   const onChange = () => {
     setTabs([...tabs, 1]);
@@ -43,6 +51,11 @@ const SingleBuilding = ({
 
   return (
     <Fragment>
+      <button onClick={(e) => {
+        e.preventDefault();
+        //getSingleBuilding(match.params._id);
+        sendMeasuresArray(measures, building._id);
+      }}>Save Packages</button>
       <Tabs
         activeKey={actKey}
         onSelect={(k) => {
@@ -126,20 +139,21 @@ const SingleBuilding = ({
           )}
         </Tab>
 
-        {proba.map((item, index) => {
+        {building && building.trans.length !== 0 && building.trans[0].meas.map((item, index) => {
+          //setTabs([...tabs, 1]);
           return (
-            <Tab key={index} title={"Paket" + (index + 1).toString()}></Tab>
+            <Tab key={index} eventKey={index} title={"Paket" + (index + 1).toString()}><Package building={building} packageNum={index + 1}></Package></Tab>
           )
         })}
-        {tabs.map((item, index) => {
-          if (index >= proba.length)
+        {building && tabs.map((item, index) => {
+          if (index >= building.trans[0].meas.length)
             return (
               <Tab
                 key={index}
                 eventKey={index}
                 title={"Paket" + (index + 1).toString()}
               >
-                <Package building={building}></Package>
+                <Package building={building} packageNum={index + 1}></Package>
               </Tab>
             );
         })}
@@ -164,6 +178,7 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getSingleBuilding,
   clearSingleBuilding,
+  sendMeasuresArray,
   getAllTransMes,
   getAllUntransMeas,
 })(SingleBuilding);

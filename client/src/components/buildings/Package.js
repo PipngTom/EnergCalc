@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
+import { connect } from "react-redux";
 import _ from "lodash";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -7,17 +8,20 @@ import PropTypes from "prop-types";
 import TransElMeas from "./TransElMeas";
 import UnTransElMeas from "./UnTransElMeas";
 import { enerCalc } from "./enerCalc";
+import { addMeasuresArray } from "../../actions/buildings";
 
-const Package = ({ building }) => {
+const Package = ({ building, packageNum, addMeasuresArray }) => {
   const [rez, setRez] = useState(null);
-  /*  useEffect(() => {
-    setQhnd(enerCalc(newBuilding));
-  }, [newBuilding]); */
+
   const [sumUnTrans, setSumUnTrans] = useState(null);
   const [sumTrans, setSumTrans] = useState(null);
   const [newBuild, setNewBuilding] = useState(_.cloneDeep(building));
   const [IdpairsUnTrans, setIdpairsUnTrans] = useState(null);
   const [IdpairsTrans, setIdpairsTrans] = useState(null);
+  useEffect(() => {
+    addMeasuresArray(IdpairsTrans, IdpairsUnTrans, packageNum);
+  }, [IdpairsTrans, IdpairsUnTrans]);
+
 
   const setUvalues = (val, tip) => {
     if (tip === "UN") {
@@ -34,8 +38,11 @@ const Package = ({ building }) => {
     setNewBuilding(newBuild);
 
     console.log("New Building: ", newBuild);
+
     console.log("Building: ", building);
+    console.log("Package umber: ", packageNum);
     console.log("Id pairs Untrans: ", IdpairsUnTrans);
+
     setRez(enerCalc(newBuild));
   };
 
@@ -44,6 +51,7 @@ const Package = ({ building }) => {
       <div>{building.name}</div>
       <TransElMeas
         element={building.trans}
+        packageNum={packageNum}
         getSum={(sum) => setSumTrans(sum)}
         getIdpairs={(idpairs) => setIdpairsTrans(idpairs)}
         getUvalues={(val, tip) => setUvalues(val, tip)}
@@ -94,13 +102,14 @@ const Package = ({ building }) => {
         IdpairsUnTrans.map((item, index) => {
           return <div key={index}>Netrans {item.idMeas}</div>;
         })}
-
     </Fragment>
   );
 };
 
 Package.propTypes = {
   building: PropTypes.object.isRequired,
+  packageNum: PropTypes.number.isRequired,
+  addMeasuresArray: PropTypes.func.isRequired
 };
 
-export default Package;
+export default connect(null, { addMeasuresArray })(Package);

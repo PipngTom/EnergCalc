@@ -101,6 +101,9 @@ const BuildingForm = ({ addBuilding }) => {
             value={vent}
             onChange={(e) => changeHandler(e)}
           />
+          <small className="form-text">
+            Please enter a ventilation coeff
+          </small>
         </div>
         <div className="form-group">
           <input
@@ -111,7 +114,7 @@ const BuildingForm = ({ addBuilding }) => {
             onChange={(e) => changeHandler(e)}
           />
           <small className="form-text">
-            Please enter a year of construction
+            Please enter a daily downtime
           </small>
         </div>
         <div className="form-group">
@@ -123,7 +126,7 @@ const BuildingForm = ({ addBuilding }) => {
             onChange={(e) => changeHandler(e)}
           />
           <small className="form-text">
-            Please enter a year of construction
+            Please enter a weekly downtime
           </small>
         </div>
         <div className="form-group">
@@ -135,7 +138,7 @@ const BuildingForm = ({ addBuilding }) => {
             onChange={(e) => changeHandler(e)}
           />
           <small className="form-text">
-            Please enter a year of construction
+            Please enter a seasonal downtime
           </small>
         </div>
         <div className="form-group">
@@ -149,7 +152,7 @@ const BuildingForm = ({ addBuilding }) => {
             <option value="Teski">Teski</option>
             <option value="Laki">Laki</option>
           </select>
-          <small className="form-text">Choose your type...</small>
+          <small className="form-text">Choose your type of building</small>
         </div>
         <input type="submit" className="btn btn-primary my-1" />
         <Link className="btn btn-light my-1" to={"/buildings"}>

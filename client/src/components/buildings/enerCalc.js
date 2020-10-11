@@ -120,9 +120,9 @@ export const enerCalc = (building) => {
             zra.J * item.povJ +
             zra.S * item.povS +
             zra.Z * item.povZ) *
-            0.9 *
-            item.fFactor *
-            item.g;
+          0.9 *
+          (1 - item.fFactor) *
+          item.g;
       });
     });
   }
@@ -138,10 +138,10 @@ export const enerCalc = (building) => {
             zra.J * item.povJ +
             zra.S * item.povS +
             zra.Z * item.povZ) *
-            0.9 *
-            item.uValue *
-            0.6 *
-            0.04;
+          0.9 *
+          item.uValue *
+          0.6 *
+          0.04;
       });
     });
   }

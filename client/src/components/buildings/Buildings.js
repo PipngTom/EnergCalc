@@ -2,18 +2,23 @@ import React, { useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getAllBuildings, getBuildings } from "../../actions/buildings";
+import { getAllTransMes, getAllUntransMeas } from "../../actions/measures";
 import BuildingItem from "./BuildingItem";
 import { useHistory } from "react-router-dom";
 
 const Buildings = ({
   getBuildings,
   getAllBuildings,
+  getAllTransMes,
+  getAllUntransMeas,
   auth,
   buildings: { buildings, loading },
 }) => {
   useEffect(() => {
     if (auth.isAuthenticated) {
       getBuildings();
+      getAllTransMes();
+      getAllUntransMeas();
     } else {
       getAllBuildings();
     }
@@ -50,6 +55,8 @@ const Buildings = ({
 Buildings.propTypes = {
   getBuildings: PropTypes.func.isRequired,
   getAllBuildings: PropTypes.func.isRequired,
+  getAllTransMes: PropTypes.func.isRequired,
+  getAllUntransMeas: PropTypes.func.isRequired,
   buildings: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
 };
@@ -59,6 +66,9 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getBuildings, getAllBuildings })(
+export default connect(mapStateToProps, {
+  getBuildings, getAllBuildings, getAllTransMes,
+  getAllUntransMeas
+})(
   Buildings
 );

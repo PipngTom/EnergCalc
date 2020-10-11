@@ -8,6 +8,7 @@ import {
   GET_SINGLE_BUILDING,
   CLEAR_SINGLE_BUILDING,
   UPDATE_BUILDING,
+  ADD_MEASURES_ARRAY
 } from "./types";
 
 export const getBuildings = () => async (dispatch) => {
@@ -199,4 +200,39 @@ export const deleteUnTransEl = (build_id, untrans_id) => async (dispatch) => {
       payload: { msg: err.message },
     });
   }
+};
+
+export const addMeasuresArray = (measuresArrayTrans, measuresArrayUnTrans, packageNum) => (dispatch) => {
+  dispatch({
+    type: ADD_MEASURES_ARRAY,
+    payload: {
+      arrTrans: measuresArrayTrans,
+      arrUnTrans: measuresArrayUnTrans,
+      num: packageNum
+    }
+  });
+}
+
+export const sendMeasuresArray = (measures, id) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  try {
+    const res = await axios.post(`/api/buildings/me/packages/${id}`, measures, config);
+    console.log(res.data);
+    /* dispatch({
+      type: GET_SINGLE_BUILDING,
+      payload: res.data,
+    }); */
+
+  } catch (err) {
+    dispatch({
+      type: BUILDINGS_ERROR,
+      payload: { msg: err.message },
+    });
+  }
+
 };

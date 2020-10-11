@@ -19,6 +19,7 @@ import AddUnTransparentEl from "./components/buildings/AddUnTransparentEl";
 import Measures from "./components/buildings/Measures";
 import AddTransMeasure from "./components/buildings/AddTransMeasure";
 import AddUnTransMeasure from "./components/buildings/AddUnTransMeasure";
+import Reports from "./components/reports/Reports"
 import "bootstrap/dist/css/bootstrap.min.css";
 
 if (localStorage.token) {
@@ -51,6 +52,11 @@ const App = () => {
                 exact
                 path="/new-building"
                 component={BuildingForm}
+              />
+              <PrivateRoute
+                exact
+                path="/reports"
+                component={Reports}
               />
               <PrivateRoute
                 exact

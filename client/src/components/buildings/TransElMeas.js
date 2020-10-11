@@ -3,16 +3,36 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Semafor } from "./Semafor";
 
-const TransElMeas = ({ element, measures, getSum, getUvalues, getIdpairs }) => {
+const TransElMeas = ({ element, measures, getSum, getUvalues, getIdpairs, packageNum }) => {
   const [newValues, setNewValues] = useState(
-    element.map((item) => item.uValue)
+    element.map((item) => {
+      let obj = item.meas.find((e) => e.paket === packageNum);
+      if (obj) {
+        if (obj.mera === 0) {
+          return item.uValue;
+        } else {
+          return measures.find((e) => e._id === obj.mera).uValue;
+        }
+      } else return item.uValue
+    })
   );
   const [Idpairs, setIdpairs] = useState(
     element.map((item) => {
-      return { idEl: item._id, idMeas: 0 };
+      let obj = item.meas.find((e) => e.paket === packageNum);
+      return { idEl: item._id, idMeas: obj ? obj.mera : 0 };
     })
   );
-  const [newPrices, setNewPrices] = useState(element.map((item) => 0));
+  const [newPrices, setNewPrices] = useState(
+    element.map((item) => {
+      let obj = item.meas.find((e) => e.paket === packageNum);
+      if (obj) {
+        if (obj.mera === 0) {
+          return 0;
+        } else {
+          return measures.find((e) => e._id === obj.mera).price;
+        }
+      } else return 0;
+    }));
   const [sum, setSum] = useState(0);
   useEffect(() => {
     let sumFor = 0;
@@ -26,6 +46,10 @@ const TransElMeas = ({ element, measures, getSum, getUvalues, getIdpairs }) => {
     getIdpairs(Idpairs);
     getUvalues(newValues, "TR");
   }, [newPrices]);
+
+  useEffect(() => {
+    console.log("PACKAGE NUMBERRRRRRR: ", packageNum)
+  }, [packageNum]);
 
   const onChange = (e, elIndex) => {
     setIdpairs(
@@ -79,38 +103,56 @@ const TransElMeas = ({ element, measures, getSum, getUvalues, getIdpairs }) => {
 
     //    console.log(sumFor, sum);
   };
-  const elements = element.map((el, elIndex) => (
-    <tr key={el._id}>
-      <td>{el.tip}</td>
-      <td>{el.opis}</td>
-      <td>{el.uValue}</td>
-      <td>{el.povI + el.povZ + el.povS + el.povJ}</td>
-      <td>
-        <select onChange={(e) => onChange(e, elIndex)} >
-          <option value="k">* Select measure</option>
-          {measures.map((item, index) => {
-            if (item.tip === el.tip) {
-              return (
-                <option key={index} value={index}>
-                  {item.opis}
-                </option>
-              );
-            }
-          })}
-        </select>
-      </td>
-      <td
-        style={
-          Semafor.find((item) => item.name === el.tip).pos <= newValues[elIndex]
-            ? { backgroundColor: "red" }
-            : {}
-        }
-      >
-        {newValues[elIndex]}
-      </td>
-      <td>{newPrices[elIndex] * (el.povI + el.povZ + el.povS + el.povJ)}</td>
-    </tr>
-  ));
+  const elements = element.map((el, elIndex) => {
+    //   console.log(packageNum);
+    //   console.log(el.meas);
+    // console.log(el.meas.find((item) => item.paket === packageNum));
+    let idMere = 0;
+    let indexMere = "k";
+    if (el.meas.find((item) => item.paket === packageNum)) {
+      idMere = el.meas.find((item) => item.paket === packageNum).mera;
+      indexMere = measures.findIndex((item) => idMere === item._id)
+    }
+
+
+    console.log("paket broj: ", packageNum);
+    console.log(el.opis);
+    console.log("ID MERE: ", idMere)
+    console.log(indexMere);
+
+    return (
+      <tr key={el._id}>
+        <td>{el.tip}</td>
+        <td>{el.opis}</td>
+        <td>{el.uValue}</td>
+        <td>{el.povI + el.povZ + el.povS + el.povJ}</td>
+        <td>
+          <select onChange={(e) => onChange(e, elIndex)} defaultValue={indexMere !== -1 ? indexMere : "k"}>
+            <option value="k">* Select measure</option>
+            {measures.map((item, index) => {
+              if (item.tip === el.tip) {
+                return (
+                  <option key={index} value={index}>
+                    {item.opis}
+                  </option>
+                );
+              }
+            })}
+          </select>
+        </td>
+        <td
+          style={
+            Semafor.find((item) => item.name === el.tip).pos <= newValues[elIndex]
+              ? { backgroundColor: "red" }
+              : {}
+          }
+        >
+          {newValues[elIndex]}
+        </td>
+        <td>{newPrices[elIndex] * (el.povI + el.povZ + el.povS + el.povJ)}</td>
+      </tr>
+    )
+  });
 
   return (
     <Fragment>
@@ -150,6 +192,7 @@ TransElMeas.propTypes = {
   element: PropTypes.array.isRequired,
   getSum: PropTypes.func.isRequired,
   getUvalues: PropTypes.func.isRequired,
+  packageNum: PropTypes.number.isRequired
 };
 
 const mapStateToProps = (state) => ({
