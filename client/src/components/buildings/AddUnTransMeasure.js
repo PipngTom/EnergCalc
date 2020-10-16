@@ -25,7 +25,8 @@ const AddUnTransMeasure = ({ addUnTransMeasure, history }) => {
         className="form"
         onSubmit={(e) => {
           e.preventDefault();
-          addUnTransMeasure(formData, history);
+          addUnTransMeasure(formData);
+          history.push("/measures");
         }}
       >
         <div className="form-group">

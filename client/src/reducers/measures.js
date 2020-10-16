@@ -24,13 +24,33 @@ export default function (state = initialState, action) {
     case ADD_TRANS_MEASURE:
       return {
         ...state,
-        transMeasures: [...state.transMeasures, payload],
-      };
+        transMeasures: state.transMeasure.map((item) => {
+          if (item._id === payload._id) {
+            return payload;
+          } else {
+            return item;
+          }
+        })
+      }
+    /*       return {
+            ...state,
+            transMeasures: [...state.transMeasures, payload],
+          }; */
     case ADD_UNTRANS_MEASURE:
       return {
         ...state,
-        untransMeasures: [...state.untransMeasures, payload],
-      };
+        untransMeasures: state.untransMeasure.map((item) => {
+          if (item._id === payload._id) {
+            return payload;
+          } else {
+            return item;
+          }
+        })
+      }
+    /*       return {
+            ...state,
+            untransMeasures: [...state.untransMeasures, payload],
+          }; */
     case GET_ALL_TRANS_MEASURES:
       return {
         ...state,

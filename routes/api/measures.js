@@ -13,8 +13,22 @@ router.post("/measure-trans", auth, async (req, res) => {
       uValue: req.body.uValue,
       price: req.body.price,
     });
-    const measureTrans = await newMeasureTrans.save();
-    res.json(measureTrans);
+    if (req.body._id) {
+      console.log("AAAAAAA")
+      measure = await MeasureTrans.findByIdAndUpdate(req.body._id, {
+        user: req.user.id,
+        tip: req.body.tip,
+        opis: req.body.opis,
+        uValue: req.body.uValue,
+        price: req.body.price,
+      }, { new: true });
+      res.json(measure);
+    } else {
+      console.log("BBBBBB")
+      const measureTrans = await newMeasureTrans.save();
+      res.json(measureTrans);
+    }
+
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -31,8 +45,24 @@ router.post("/measure-untrans", auth, async (req, res) => {
       lam: req.body.lam,
       price: req.body.price,
     });
-    const measureUnTrans = await newMeasureUnTrans.save();
-    res.json(measureUnTrans);
+
+    if (req.body._id) {
+      console.log("AAAAAAA")
+      measure = await MeasureUnTrans.findByIdAndUpdate(req.body._id, {
+        user: req.user.id,
+        tip: req.body.tip,
+        opis: req.body.opis,
+        deb: req.body.deb,
+        lam: req.body.lam,
+        price: req.body.price,
+      }, { new: true });
+      res.json(measure);
+    } else {
+      console.log("BBBBBB")
+      const measureUnTrans = await newMeasureUnTrans.save();
+      res.json(measureUnTrans);
+    }
+
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");

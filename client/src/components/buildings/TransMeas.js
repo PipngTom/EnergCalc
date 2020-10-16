@@ -2,8 +2,11 @@ import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { deleteTransMes } from "../../actions/measures";
+import { useHistory } from "react-router-dom";
 
 const TransMeas = ({ element, deleteTransMes }) => {
+
+  const history = useHistory();
   const elements = element
     .sort((a, b) => {
       if (a.tip < b.tip) {
@@ -15,7 +18,7 @@ const TransMeas = ({ element, deleteTransMes }) => {
       return 0;
     })
     .map((el) => (
-      <tr key={el._id}>
+      <tr key={el._id + Math.floor(Math.random() * 1000)}>
         <td>{el.tip}</td>
         <td>{el.opis}</td>
         <td>{el.uValue}</td>
@@ -26,6 +29,14 @@ const TransMeas = ({ element, deleteTransMes }) => {
             onClick={() => deleteTransMes(el._id)}
           >
             Delete
+          </button>
+        </td>
+        <td>
+          <button
+            className="btn btn-success"
+            onClick={() => { console.log(el._id); history.push("/edit-trans/" + el._id); }}
+          >
+            Edit
           </button>
         </td>
       </tr>
@@ -41,6 +52,7 @@ const TransMeas = ({ element, deleteTransMes }) => {
             <th>Description</th>
             <th className="hide-sm">uValue</th>
             <th className="hide-sm">Price</th>
+            <th />
             <th />
           </tr>
         </thead>

@@ -10,7 +10,7 @@ import {
 } from "./types";
 import { setAlert } from "./alert";
 
-export const addTransMeasure = (formData, history) => async (dispatch) => {
+export const addTransMeasure = (formData) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -27,7 +27,6 @@ export const addTransMeasure = (formData, history) => async (dispatch) => {
       type: ADD_TRANS_MEASURE,
       payload: res.data,
     });
-    history.push("/measures");
   } catch (err) {
     dispatch({
       type: MEASURES_ERROR,
@@ -36,7 +35,7 @@ export const addTransMeasure = (formData, history) => async (dispatch) => {
   }
 };
 
-export const addUnTransMeasure = (formData, history) => async (dispatch) => {
+export const addUnTransMeasure = (formData) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -53,7 +52,7 @@ export const addUnTransMeasure = (formData, history) => async (dispatch) => {
       type: ADD_UNTRANS_MEASURE,
       payload: res.data,
     });
-    history.push("/measures");
+
   } catch (err) {
     dispatch({
       type: MEASURES_ERROR,

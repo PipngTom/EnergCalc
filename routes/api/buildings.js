@@ -41,6 +41,7 @@ router.get("/", async (req, res) => {
 router.post("/me", auth, async (req, res) => {
   //const user = await User.findById(req.user.id)
   try {
+
     const newBuilding = new Building({
       user: req.user.id,
       pov: req.body.pov,
@@ -53,9 +54,28 @@ router.post("/me", auth, async (req, res) => {
       mPrekid: req.body.mPrekid,
       tipGradnje: req.body.tipGradnje,
     });
+    if (req.body._id) {
+      console.log("AAAAAAA")
+      building = await Building.findByIdAndUpdate(req.body._id, {
+        user: req.user.id,
+        pov: req.body.pov,
+        zap: req.body.zap,
+        year: req.body.year,
+        name: req.body.name,
+        vent: req.body.vent,
+        dPrekid: req.body.dPrekid,
+        nPrekid: req.body.nPrekid,
+        mPrekid: req.body.mPrekid,
+        tipGradnje: req.body.tipGradnje,
+      }, { new: true })
+      res.json(building);
+    } else {
+      console.log("BBBBBB")
+      const post = await newBuilding.save();
+      res.json(post);
+    }
 
-    const post = await newBuilding.save();
-    res.json(post);
+
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");

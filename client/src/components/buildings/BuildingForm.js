@@ -39,8 +39,7 @@ const BuildingForm = ({ addBuilding }) => {
     <section className="container">
       <h1 className="large text-primary">Create Your Building</h1>
       <p className="lead">
-        <i className="fas fa-user"></i> Let's get some information to make your
-        profile stand out
+        <i className="fas fa-user"></i> Let's get some information to create your building
       </p>
       <small>* = required field</small>
       <form

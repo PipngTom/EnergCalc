@@ -36,7 +36,7 @@ const SingleBuilding = ({
     getAllUntransMeas();
 
     return () => {
-      clearSingleBuilding();
+      //  clearSingleBuilding();
     };
   }, [getSingleBuilding]);
 
@@ -57,6 +57,10 @@ const SingleBuilding = ({
         //getSingleBuilding(match.params._id);
         sendMeasuresArray(measures, building._id);
       }}>Save Packages</Button>
+
+      <Link to={`/edit-building/${match.params._id}`} className='btn btn-light'>
+        <i className='fas fa-user-circle text-primary' /> Edit Building
+      </Link>
       <Tabs
         activeKey={actKey}
         onSelect={(k) => {
