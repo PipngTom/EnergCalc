@@ -127,10 +127,10 @@ const UnTransElMeas = ({
       indexMere = measures.findIndex((item) => idMere === item._id)
     }
 
-    console.log("paket broj: ", packageNum);
-    console.log(el.opis);
-    console.log("ID MERE: ", idMere)
-    console.log(indexMere);
+//    console.log("paket broj: ", packageNum);
+//    console.log(el.opis);
+//    console.log("ID MERE: ", idMere)
+//    console.log(indexMere);
 
     return (
       <tr key={el._id}>
@@ -161,7 +161,7 @@ const UnTransElMeas = ({
               : {}
           }
         >
-          {newValues[elIndex].toFixed(3)}
+          {newValues[elIndex] && newValues[elIndex].toFixed(3)}
         </td>
         <td>
           {(newPrices[elIndex] * (el.povI + el.povZ + el.povS + el.povJ)).toFixed(

@@ -12,7 +12,7 @@ import { addMeasuresArray, setVentCoeff } from "../../actions/buildings";
 
 const Package = ({ building, packageNum, addMeasuresArray, setVentCoeff }) => {
   const [rez, setRez] = useState(null);
-  const [vent, setVent] = useState(building.packageVent.find((item) => item.packageNum === packageNum) ? building.packageVent.find((item) => item.packageNum === packageNum).ven : 0);
+  const [vent, setVent] = useState(building.packageVent.find((item) => item.packageNum === packageNum) ? building.packageVent.find((item) => item.packageNum === packageNum).ven : building.vent);
 
   const [sumUnTrans, setSumUnTrans] = useState(null);
   const [sumTrans, setSumTrans] = useState(null);
@@ -23,6 +23,9 @@ const Package = ({ building, packageNum, addMeasuresArray, setVentCoeff }) => {
     addMeasuresArray(IdpairsTrans, IdpairsUnTrans, packageNum);
   }, [IdpairsTrans, IdpairsUnTrans]);
 
+  useEffect(() => {
+    setRez(enerCalc(newBuild, vent));
+  }, [vent]);
 
   const setUvalues = (val, tip) => {
     if (tip === "UN") {
@@ -38,13 +41,13 @@ const Package = ({ building, packageNum, addMeasuresArray, setVentCoeff }) => {
 
     setNewBuilding(newBuild);
 
-    console.log("New Building: ", newBuild);
+//    console.log("New Building: ", newBuild);
 
-    console.log("Building: ", building);
-    console.log("Package umber: ", packageNum);
-    console.log("Id pairs Untrans: ", IdpairsUnTrans);
+//    console.log("Building: ", building);
+//    console.log("Package umber: ", packageNum);
+//    console.log("Id pairs Untrans: ", IdpairsUnTrans);
 
-    setRez(enerCalc(newBuild));
+    setRez(enerCalc(newBuild, vent));
   };
 
   const changeHandler = (e) => {
@@ -94,8 +97,9 @@ const Package = ({ building, packageNum, addMeasuresArray, setVentCoeff }) => {
           </Col>
         </Row>
         <Row>
-          <Col></Col>
-          <Col></Col>
+          <Col><b>Qhnd,rel za paket: {rez && (rez.Qhint/building.pov).toFixed(0)} kWh/m
+                <sup>2</sup></b></Col>
+          <Col><b>Klasa za paket: {rez && rez.klasa} razred</b></Col>
           <Col>
             <b>
               Prost period otplate investicije iznosi:{" "}

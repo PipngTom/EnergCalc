@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from "react";
+import React, { useEffect, Fragment, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getAllBuildings, getBuildings } from "../../actions/buildings";
@@ -14,6 +14,8 @@ const Buildings = ({
   auth,
   buildings: { buildings, loading },
 }) => {
+
+  const [searchString, setSearchString] = useState("");
   useEffect(() => {
     if (auth.isAuthenticated) {
       getBuildings();
@@ -29,6 +31,11 @@ const Buildings = ({
     history.push("new-building");
   };
 
+  const changeHandler = (e) => {
+
+    setSearchString(e.target.value);
+  }
+
   return (
     <Fragment>
       <h1 className="large text-primary">Buildings</h1>
@@ -36,6 +43,13 @@ const Buildings = ({
         <i className="fas fa-calculator"></i>
         Welcome to EnergCalc
       </p>
+      <input
+        type="text"
+        placeholder="Enter search string"
+        name="Search"
+        value={searchString}
+        onChange={(e) => changeHandler(e)}
+      />
       <button
         type="button"
         className="btn btn-primary"
@@ -45,9 +59,9 @@ const Buildings = ({
       </button>
       <div className="posts d-flex flex-wrap">
         <div className="row">
-          {buildings.map((build) => (
+          {buildings.map((build) => {if(build.name.toUpperCase().includes(searchString.toUpperCase())) return (
             <BuildingItem key={build._id} building={build} />
-          ))}
+          )})}
         </div>
       </div>
     </Fragment>

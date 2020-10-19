@@ -1,4 +1,4 @@
-export const enerCalc = (building) => {
+export const enerCalc = (building, vent = building.vent) => {
   //if (building.trans && building.neTrans) return 0;
   const HDD = [124, 459, 653, 720, 563, 455, 126];
   const danaMesec = [24, 30, 31, 31, 28, 31, 25];
@@ -53,7 +53,7 @@ export const enerCalc = (building) => {
   const prisutnost = 12;
   const odavanjePoPov = 1.8;
   const potrosnjaUredj = 30;
-  const brojIzmenaVaz = building.vent;
+  const brojIzmenaVaz = vent;
   const tipObjekta = tipGradnje.find((item) => {
     return item.name === building.tipGradnje;
   }).value;
@@ -120,7 +120,7 @@ export const enerCalc = (building) => {
             zra.J * item.povJ +
             zra.S * item.povS +
             zra.Z * item.povZ) *
-          0.9 *
+          0.6075 *
           (1 - item.fFactor) *
           item.g;
       });
@@ -141,7 +141,7 @@ export const enerCalc = (building) => {
               zra.J * item.povJ +
               zra.S * item.povS +
               zra.Z * item.povZ) *
-            0.9 *
+              0.6075 *
             item.uValue *
             0.6 *
             0.04;
@@ -159,7 +159,7 @@ export const enerCalc = (building) => {
               item.povJ +
               item.povS +
               item.povZ) *
-            0.9 *
+              0.6075 *
             item.uValue *
             0.6 *
             0.04;
