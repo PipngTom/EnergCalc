@@ -47,6 +47,13 @@ const BuildingSchema = new mongoose.Schema({
       meas: []
     },
   ],
+  packageVent: [
+    {
+      ven: Number,
+      packageNum: Number
+
+    }
+  ],
   vent: {
     type: Number,
     required: true,

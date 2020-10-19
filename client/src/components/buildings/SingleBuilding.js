@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import {
   getSingleBuilding,
   clearSingleBuilding,
-  sendMeasuresArray
+  sendMeasuresArray,
+  sendVentArray
 } from "../../actions/buildings";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -20,10 +21,11 @@ const SingleBuilding = ({
   getSingleBuilding,
   clearSingleBuilding,
   sendMeasuresArray,
+  sendVentArray,
   getAllTransMes,
   getAllUntransMeas,
   match,
-  buildings: { building, measures },
+  buildings: { building, measures, vent },
 }) => {
 
   const [tabs, setTabs] = useState([]);
@@ -55,7 +57,11 @@ const SingleBuilding = ({
       <Button variant="primary" size="lg" onClick={(e) => {
         e.preventDefault();
         //getSingleBuilding(match.params._id);
+        //sendVentArray(vent, building._id);
         sendMeasuresArray(measures, building._id);
+        console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+        sendVentArray(vent, building._id);
+        console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
       }}>Save Packages</Button>
 
       <Link to={`/edit-building/${match.params._id}`} className='btn btn-light'>
@@ -150,7 +156,7 @@ const SingleBuilding = ({
             <Tab key={index} eventKey={index} title={"Paket" + (index + 1).toString()}><Package building={building} packageNum={index + 1}></Package></Tab>
           )
         })}
-        {building && tabs.map((item, index) => {
+        {building && building.trans.length !== 0 && tabs.map((item, index) => {
           if (index >= building.trans[0].meas.length)
             return (
               <Tab
@@ -184,6 +190,7 @@ export default connect(mapStateToProps, {
   getSingleBuilding,
   clearSingleBuilding,
   sendMeasuresArray,
+  sendVentArray,
   getAllTransMes,
   getAllUntransMeas,
 })(SingleBuilding);

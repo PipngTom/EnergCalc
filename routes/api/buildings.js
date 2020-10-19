@@ -266,4 +266,21 @@ router.post("/me/packages/:id", auth, async (req, res) => {
   }
 });
 
+router.post("/me/vent/:id", auth, async (req, res) => {
+  console.log(req.body);
+  //console.log(req.params.id)
+  const vent = req.body;
+
+  try {
+    const building = await Building.findByIdAndUpdate(req.params.id, { packageVent: vent }, { new: true });
+
+    await building.save();
+    res.json(building);
+
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;

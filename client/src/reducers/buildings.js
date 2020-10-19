@@ -6,10 +6,12 @@ import {
   GET_SINGLE_BUILDING,
   CLEAR_SINGLE_BUILDING,
   UPDATE_BUILDING,
-  ADD_MEASURES_ARRAY
+  ADD_MEASURES_ARRAY,
+  SET_VENT
 } from "../actions/types";
 
 const initialState = {
+  vent: [],
   buildings: [],
   measures: [],
   building: null,
@@ -21,6 +23,25 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case SET_VENT:
+      let arrVent;
+      if (state.vent.findIndex((item) => item.packageNum === payload.packageNum) === -1) {
+        arrVent = [...state.vent, payload]
+      } else {
+        arrVent = state.vent.map((item) => {
+          if (item.packageNum === payload.packageNum) {
+            return {
+              ven: payload.ven,
+              packageNum: payload.packageNum
+            }
+          } else return item;
+        })
+      }
+      return {
+        ...state,
+        vent: arrVent
+
+      };
     case GET_BUILDINGS:
       return {
         ...state,

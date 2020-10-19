@@ -1,7 +1,7 @@
 export const enerCalc = (building) => {
   //if (building.trans && building.neTrans) return 0;
   const HDD = [124, 459, 653, 720, 563, 455, 126];
-  const danaMesec = [15, 30, 31, 31, 28, 31, 15];
+  const danaMesec = [24, 30, 31, 31, 28, 31, 25];
   const tipGradnje = [
     { name: "Teski", value: 260000 },
     { name: "Srednji", value: 165000 },
@@ -130,19 +130,41 @@ export const enerCalc = (building) => {
   //calculation of solar heat gains - netrans
   if (building.neTrans && building.neTrans.length !== 0) {
     building.neTrans.map((item) => {
-      zracenje.map((zra, index) => {
-        //      debugger;
-        Qsolnetr[index] =
-          Qsolnetr[index] +
-          (zra.I * item.povI +
-            zra.J * item.povJ +
-            zra.S * item.povS +
-            zra.Z * item.povZ) *
-          0.9 *
-          item.uValue *
-          0.6 *
-          0.04;
-      });
+      if (
+        item.tip === "Spoljni zid"
+      ) {
+        zracenje.map((zra, index) => {
+          //       debugger;
+          Qsolnetr[index] =
+            Qsolnetr[index] +
+            (zra.I * item.povI +
+              zra.J * item.povJ +
+              zra.S * item.povS +
+              zra.Z * item.povZ) *
+            0.9 *
+            item.uValue *
+            0.6 *
+            0.04;
+        });
+      }
+      if (
+        item.tip === "Ravan krov iznad grejanog prostora" ||
+        item.tip === "Kosi krov iznad grejanog prostora"
+      ) {
+        zracenje.map((zra, index) => {
+          //       debugger;
+          Qsolnetr[index] =
+            Qsolnetr[index] +
+            zra.H * (item.povI +
+              item.povJ +
+              item.povS +
+              item.povZ) *
+            0.9 *
+            item.uValue *
+            0.6 *
+            0.04;
+        });
+      }
     });
   }
 
@@ -193,31 +215,90 @@ export const enerCalc = (building) => {
       aRed[index] = 1 - 3 * tauRatio * item * (1 - Fhhr);
     }
   });
-
   //calculation of Qhnd intermitent
-
   Qhnd.map((item, index) => {
     Qhndint[index] = item * aRed[index];
   });
 
-  // console.log("Qtrans ", Qtrans);
-  // console.log("Qvent ", Qvent);
-  // console.log("Qsoltr ", Qsoltr);
-  // console.log("Qsolnetr ", Qsolnetr);
-  // console.log("Qlj ", Qlj);
-  // console.log("Qure ", Qure);
-  // console.log("Gamma ", gama);
-  // console.log("Ni ", ni);
-  // console.log("Qhnd ", Qhnd);
-  // console.log(Fhhr);
+  //GODISNJI
+  const QsoltrSingle = Qsoltr.reduce((a, b) => a + b);
+  const QsolnetrSingle = Qsolnetr.reduce((a, b) => a + b);
+  const QljSingle = Qlj.reduce((a, b) => a + b);
+  const QureSingle = Qure.reduce((a, b) => a + b);
+  const QtransSingle = Qtrans.reduce((a, b) => a + b);
+  const QventSingle = Qvent.reduce((a, b) => a + b);
+
+  const gamaSingle =
+    (QsoltrSingle + QsolnetrSingle + QljSingle + QureSingle) /
+    (QtransSingle + QventSingle);
+
+  const niSingle =
+    (1 - Math.pow(gamaSingle, ah)) / (1 - Math.pow(gamaSingle, ah + 1));
+
+  const QhndSingle =
+    QtransSingle +
+    QventSingle -
+    niSingle * (QsoltrSingle + QsolnetrSingle + QljSingle + QureSingle);
+
+  let aRedSingle;
+
+  if (1 - 3 * tauRatio * gamaSingle * (1 - Fhhr) < Fhhr) {
+    aRedSingle = Fhhr;
+  } else {
+    aRedSingle = 1 - 3 * tauRatio * gamaSingle * (1 - Fhhr);
+  }
+
+  const QhndintSingle = QhndSingle * aRedSingle;
+
+  /*  console.log(
+     "Dobici singl ",
+     QsoltrSingle + QsolnetrSingle + QljSingle + QureSingle
+   ); */
+  // console.log("Gubici singl ", QtransSingle + QventSingle);
+  // console.log("Dobici ljudi :", QljSingle);
+  // console.log("Dobici uredjaja :", QureSingle);
+  // console.log("Dobici transparentni :", QsoltrSingle);
+  // console.log("Dobici netransparentni :", QsolnetrSingle);
+  // console.log("aRedSingle: ", aRedSingle);
+  //  console.log("QhndSingle: ", QhndSingle);
+  // console.log("QhndintSingle: ", QhndintSingle);
+  // console.log("GammaSingle ", gamaSingle);
+  // console.log("tau ", tau);
+  // console.log("tauRatio ", tauRatio);
+  // console.log("Fhhr ", Fhhr);
+
+  /*   console.log("Hv ", Hv);
+  console.log("Ht ", Ht);
+  console.log("Cm ", Cm);
+  console.log("tau ", tau);
+  console.log("Qtrans ", Qtrans);
+  console.log("Qvent ", Qvent);
+  console.log("Qsoltr ", Qsoltr);
+  console.log("Qsolnetr ", Qsolnetr);
+  console.log("Qlj ", Qlj);
+  console.log("Qure ", Qure);
+  console.log("Gamma ", gama);
+  console.log("Ni ", ni);
+  console.log("Qhnd ", Qhnd);
+  console.log(Fhhr);
+  console.log("aRed ", aRed);
+  console.log("Qhndint ", Qhndint); */
   // console.log("aRed ", aRed);
-  // console.log("Qhndint ", Qhndint);
+  // console.log("Gamma ", gama);
+  /*   console.log(
+      "Qhnd ",
+      Qhnd.reduce((a, b) => a + b)
+    );
+    console.log(
+      "Qhndint ",
+      Qhndint.reduce((a, b) => a + b)
+    ); */
   // console.log(
   //   "Qhndint for whole year ",
   //   Qhnd.reduce((a, b) => a + b)
   // );
   const Qhint = Qhndint.reduce((a, b) => a + b);
-  // console.log("povrsina omot: ", povOm, "Ht: ", Ht, "Htb ", Htb, "Hv: ", Hv);
+
   const klasa = clasaObjekta.find((item) => {
     return item.from < Qhint / building.pov && item.to >= Qhint / building.pov;
   }).name;

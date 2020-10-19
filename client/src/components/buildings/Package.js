@@ -8,10 +8,11 @@ import PropTypes from "prop-types";
 import TransElMeas from "./TransElMeas";
 import UnTransElMeas from "./UnTransElMeas";
 import { enerCalc } from "./enerCalc";
-import { addMeasuresArray } from "../../actions/buildings";
+import { addMeasuresArray, setVentCoeff } from "../../actions/buildings";
 
-const Package = ({ building, packageNum, addMeasuresArray }) => {
+const Package = ({ building, packageNum, addMeasuresArray, setVentCoeff }) => {
   const [rez, setRez] = useState(null);
+  const [vent, setVent] = useState(building.packageVent.find((item) => item.packageNum === packageNum) ? building.packageVent.find((item) => item.packageNum === packageNum).ven : 0);
 
   const [sumUnTrans, setSumUnTrans] = useState(null);
   const [sumTrans, setSumTrans] = useState(null);
@@ -46,9 +47,23 @@ const Package = ({ building, packageNum, addMeasuresArray }) => {
     setRez(enerCalc(newBuild));
   };
 
+  const changeHandler = (e) => {
+    setVent(e.target.value);
+    setVentCoeff(e.target.value, packageNum);
+    //console.log(e.target.value)
+  }
+
   return (
     <Fragment>
-      <div>{building.name}</div>
+      <h2 className="text-primary">{building.name}</h2>
+      <h3>ventilacioni koeficijent</h3>
+      <input
+        type="text"
+        placeholder="Ventilation coeff"
+        name="vent"
+        value={vent}
+        onChange={(e) => changeHandler(e)}
+      />
       <TransElMeas
         element={building.trans}
         packageNum={packageNum}
@@ -95,14 +110,14 @@ const Package = ({ building, packageNum, addMeasuresArray }) => {
           </Col>
         </Row>
       </Container>
-      {IdpairsTrans &&
+      {/*       {IdpairsTrans &&
         IdpairsTrans.map((item, index) => {
           return <div key={index}>Trans {item.idMeas}</div>;
         })}
       {IdpairsUnTrans &&
         IdpairsUnTrans.map((item, index) => {
           return <div key={index}>Netrans {item.idMeas}</div>;
-        })}
+        })} */}
     </Fragment>
   );
 };
@@ -110,7 +125,8 @@ const Package = ({ building, packageNum, addMeasuresArray }) => {
 Package.propTypes = {
   building: PropTypes.object.isRequired,
   packageNum: PropTypes.number.isRequired,
-  addMeasuresArray: PropTypes.func.isRequired
+  addMeasuresArray: PropTypes.func.isRequired,
+  setVentCoeff: PropTypes.func.isRequired
 };
 
-export default connect(null, { addMeasuresArray })(Package);
+export default connect(null, { addMeasuresArray, setVentCoeff })(Package);

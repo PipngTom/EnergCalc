@@ -3,6 +3,7 @@ const router = express.Router();
 const auth = require("../../routes/api/middleware/auth");
 const MeasureTrans = require("../../models/MeasureTrans");
 const MeasureUnTrans = require("../../models/MeasureUnTrans");
+const Building = require("../../models/Building");
 
 router.post("/measure-trans", auth, async (req, res) => {
   try {
@@ -103,6 +104,25 @@ router.delete("/measure-trans/:id", auth, async (req, res) => {
     if (transMe.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: "User not authorized" });
     }
+    const buildings = await Building.find({ user: req.user.id }) //pronalazi sve zgrade od korisnika
+
+
+    buildings.forEach(async (building) => {
+      building.trans.forEach((tra) => {
+        tra.meas.forEach((mea) => {
+          if (mea.mera === req.params.id) {
+            mea.mera = 0;
+          }
+        });
+      });
+
+
+
+      const rez = await Building.findByIdAndUpdate(building._id, { trans: building.trans }, { new: true });
+
+
+    });
+
     transMe.remove();
     res.json({ msg: "Measure removed" });
   } catch (err) {
@@ -117,6 +137,24 @@ router.delete("/measure-untrans/:id", auth, async (req, res) => {
     if (unTransMe.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: "User not authorized" });
     }
+    const buildings = await Building.find({ user: req.user.id }) //pronalazi sve zgrade od korisnika
+
+
+    buildings.forEach(async (building) => {
+      building.neTrans.forEach((tra) => {
+        tra.meas.forEach((mea) => {
+          if (mea.mera === req.params.id) {
+            mea.mera = 0;
+          }
+        });
+      });
+
+
+
+      const rez = await Building.findByIdAndUpdate(building._id, { neTrans: building.neTrans }, { new: true });
+
+
+    });
     unTransMe.remove();
     res.json({ msg: "Measure removed" });
   } catch (err) {
