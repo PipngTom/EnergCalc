@@ -13,11 +13,11 @@ const BuildingItem = ({ deleteBuilding, auth, building }) => {
   const { Qhint, klasa } = enerCalc(building);
   return (
     <Fragment>
-      <div className="col-4">
+      <div className="col-md-6 col-lg-4">
         <Card>
           <Card.Img
             variant="top"
-            src="https://pixnio.com/free-images/2019/08/10/2019-08-10-08-48-13-1200x800.jpg"
+            src={building.image ? `http://localhost:5000/${building.image}` : "https://pixnio.com/free-images/2019/08/10/2019-08-10-08-48-13-1200x800.jpg"}
           />
           <Card.Body>
             <Card.Title>{building && building.name}</Card.Title>

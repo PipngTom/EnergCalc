@@ -141,9 +141,9 @@ const TransElMeas = ({ element, measures, getSum, getUvalues, getIdpairs, packag
           </select>
         </td>
         <td
-          style={
+          className={
             Semafor.find((item) => item.name === el.tip).pos <= newValues[elIndex]
-              ? { backgroundColor: "red" }
+              ? "semafor"
               : {}
           }
         >

@@ -10,9 +10,9 @@ const UnTransEl = ({ element, buildingId, deleteUnTransEl }) => {
       <td>{el.tip}</td>
       <td>{el.opis}</td>
       <td
-        style={
+        className={
           Semafor.find((item) => item.name === el.tip).pos <= el.uValue
-            ? { backgroundColor: "red" }
+            ? "semafor"
             : {}
         }
       >

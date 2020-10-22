@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../../routes/api/middleware/auth");
+const fileUpload = require("../../routes/api/middleware/file-upload");
 const Building = require("../../models/Building");
 const User = require("../../models/User");
+const fs = require('fs');
 
 router.get("/me", auth, async (req, res) => {
   try {
@@ -38,12 +40,14 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/me", auth, async (req, res) => {
+router.post("/me", auth, fileUpload.single('image'), async (req, res) => {
   //const user = await User.findById(req.user.id)
+  console.log("FILEEEEEE", req.file);
   try {
 
     const newBuilding = new Building({
       user: req.user.id,
+      image: req.file.path,
       pov: req.body.pov,
       zap: req.body.zap,
       year: req.body.year,
@@ -56,8 +60,10 @@ router.post("/me", auth, async (req, res) => {
     });
     if (req.body._id) {
       console.log("AAAAAAA")
+      oldBuilding = await Building.findById(req.body._id);
       building = await Building.findByIdAndUpdate(req.body._id, {
         user: req.user.id,
+        image: req.file.path,
         pov: req.body.pov,
         zap: req.body.zap,
         year: req.body.year,
@@ -68,6 +74,9 @@ router.post("/me", auth, async (req, res) => {
         mPrekid: req.body.mPrekid,
         tipGradnje: req.body.tipGradnje,
       }, { new: true })
+      fs.unlink(oldBuilding.image, err => {
+        console.log(err);
+      });
       res.json(building);
     } else {
       console.log("BBBBBB")
@@ -89,7 +98,9 @@ router.delete("/me/:id", auth, async (req, res) => {
     if (building.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: "User not authorized" });
     }
-
+    fs.unlink(building.image, err => {
+      console.log(err);
+    });
     await building.remove();
 
     res.json({ msg: "Building removed" });
@@ -282,5 +293,6 @@ router.post("/me/vent/:id", auth, async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
 
 module.exports = router;

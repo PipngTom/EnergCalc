@@ -51,6 +51,7 @@ const EditBuilding = ({ addBuilding, buildings: { building }, match }) => {
 
     const {
         pov,
+        image,
         zap,
         year,
         name,
@@ -67,6 +68,11 @@ const EditBuilding = ({ addBuilding, buildings: { building }, match }) => {
         setAllValues({ ...allValues, [e.target.name]: e.target.value });
     };
 
+    const pickedHandler = (event) => {
+        console.log(event.target.files[0]);
+        setAllValues({ ...allValues, image: event.target.files[0] });
+    };
+
     const history = useHistory();
 
     return (
@@ -80,7 +86,19 @@ const EditBuilding = ({ addBuilding, buildings: { building }, match }) => {
                 className="form"
                 onSubmit={(e) => {
                     e.preventDefault();
-                    addBuilding(allValues);
+                    var formData = new FormData();
+                    formData.append("_id", building._id);
+                    formData.append("pov", pov);
+                    formData.append("image", image);
+                    formData.append("zap", zap);
+                    formData.append("year", year);
+                    formData.append("name", name);
+                    formData.append("vent", vent);
+                    formData.append("dPrekid", dPrekid);
+                    formData.append("nPrekid", nPrekid);
+                    formData.append("mPrekid", mPrekid);
+                    formData.append("tipGradnje", tipGradnje);
+                    addBuilding(formData);
                     history.push("/buildings");
                 }}
             >
@@ -187,6 +205,14 @@ const EditBuilding = ({ addBuilding, buildings: { building }, match }) => {
                     </select>
                     <small className="form-text">Choose your type of building</small>
                 </div>
+                <input
+
+
+                    //style={{ display: 'none' }}
+                    type="file"
+                    accept=".jpg,.png,.jpeg"
+                    onChange={pickedHandler}
+                />
                 <input type="submit" className="btn btn-primary my-1" />
                 <Link className="btn btn-light my-1" to={"/buildings"}>
                     Go Back

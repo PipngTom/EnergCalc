@@ -3,10 +3,12 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addBuilding } from "../../actions/buildings";
 import { useHistory, Link } from "react-router-dom";
+import ImageUpload from '../../components/FormElements/ImageUpload';
 
 const BuildingForm = ({ addBuilding }) => {
   const [allValues, setAllValues] = useState({
     pov: 0,
+    image: "",
     zap: 0,
     year: 0,
     name: "",
@@ -19,6 +21,7 @@ const BuildingForm = ({ addBuilding }) => {
 
   const {
     pov,
+    image,
     zap,
     year,
     name,
@@ -32,6 +35,11 @@ const BuildingForm = ({ addBuilding }) => {
   const changeHandler = (e) => {
     setAllValues({ ...allValues, [e.target.name]: e.target.value });
   };
+  const pickedHandler = (event) => {
+    console.log(event.target.files[0]);
+    setAllValues({ ...allValues, image: event.target.files[0] });
+  };
+
 
   const history = useHistory();
 
@@ -46,7 +54,20 @@ const BuildingForm = ({ addBuilding }) => {
         className="form"
         onSubmit={(e) => {
           e.preventDefault();
-          addBuilding(allValues);
+          var formData = new FormData();
+
+          formData.append("pov", pov);
+          formData.append("image", image);
+          formData.append("zap", zap);
+          formData.append("year", year);
+          formData.append("name", name);
+          formData.append("vent", vent);
+          formData.append("dPrekid", dPrekid);
+          formData.append("nPrekid", nPrekid);
+          formData.append("mPrekid", mPrekid);
+          formData.append("tipGradnje", tipGradnje);
+
+          addBuilding(formData);
           history.push("buildings");
         }}
       >
@@ -153,6 +174,14 @@ const BuildingForm = ({ addBuilding }) => {
           </select>
           <small className="form-text">Choose your type of building</small>
         </div>
+        <input
+
+
+          //style={{ display: 'none' }}
+          type="file"
+          accept=".jpg,.png,.jpeg"
+          onChange={pickedHandler}
+        />
         <input type="submit" className="btn btn-primary my-1" />
         <Link className="btn btn-light my-1" to={"/buildings"}>
           Go Back

@@ -9,6 +9,7 @@ const BuildingSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  image: { type: String },
   zap: {
     type: Number,
     required: true,

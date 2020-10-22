@@ -1,8 +1,9 @@
 const express = require("express");
+const path = require('path');
 const connectDb = require("./config/db");
 
 const app = express();
-
+app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 connectDb();
 
 app.use(express.json({ extended: false }));

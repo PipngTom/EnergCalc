@@ -582,3 +582,12 @@ button {
 .card {
   margin-bottom: 20px;
 }
+.card img {
+  object-fit: cover;
+  height: 250px;
+}
+.semafor {
+  color: #cd3545;
+  font-weight: bold;
+  border: 3px solid  #cd3545 !important;
+}

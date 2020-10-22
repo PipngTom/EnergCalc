@@ -62,7 +62,10 @@ export const getSingleBuilding = (id) => async (dispatch) => {
 export const addBuilding = (formData) => async (dispatch) => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      //    "Content-Type": "application/json",
+      // 'Content-Type': 'multipart/form-data'
+      //'Accept': 'application/json',
+      'Content-Type': 'multipart/form-data',
     },
   };
 
