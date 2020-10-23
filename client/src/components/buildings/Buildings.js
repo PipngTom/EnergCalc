@@ -57,13 +57,15 @@ const Buildings = ({
       >
         Create New Building
       </button>
-      <div className="posts d-flex flex-wrap">
-        <div className="row">
-          {buildings.map((build) => {if(build.name.toUpperCase().includes(searchString.toUpperCase())) return (
+      {/* <div className="d-flex flex-wrap"> */}
+      <div className="posts row">
+        {buildings.map((build) => {
+          if (build.name.toUpperCase().includes(searchString.toUpperCase())) return (
             <BuildingItem key={build._id} building={build} />
-          )})}
-        </div>
+          )
+        })}
       </div>
+      {/* </div> */}
     </Fragment>
   );
 };
