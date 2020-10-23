@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import {
   getSingleBuilding,
   clearSingleBuilding,
+  sendMeasuresArray,
+  sendVentArray
 } from "../../actions/buildings";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -11,29 +13,40 @@ import UnTransEl from "./UnTransEl";
 import { enerCalc } from "./enerCalc";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
+import Button from "react-bootstrap/Button";
 import Package from "./Package";
 import { getAllTransMes, getAllUntransMeas } from "../../actions/measures";
 
 const SingleBuilding = ({
   getSingleBuilding,
   clearSingleBuilding,
+  sendMeasuresArray,
+  sendVentArray,
   getAllTransMes,
   getAllUntransMeas,
   match,
-  buildings: { building },
+  buildings: { building, measures, vent },
 }) => {
-  useEffect(() => {
-    getSingleBuilding(match.params._id);
-    getAllTransMes();
-    getAllUntransMeas();
-    return () => {
-      clearSingleBuilding();
-    };
-  }, [getSingleBuilding]);
 
   const [tabs, setTabs] = useState([]);
 
   const [actKey, setActKey] = useState("details");
+
+  useEffect(() => {
+    getSingleBuilding(match.params._id);
+    getAllTransMes();
+    getAllUntransMeas();
+
+    return () => {
+      //  clearSingleBuilding();
+    };
+  }, [getSingleBuilding]);
+
+  useEffect(() => {
+    if (building && building.trans.length !== 0) {
+      setTabs(building.trans[0].meas.map(() => 1));
+    }
+  }, [building]);
 
   const onChange = () => {
     setTabs([...tabs, 1]);
@@ -41,6 +54,19 @@ const SingleBuilding = ({
 
   return (
     <Fragment>
+      <Button variant="primary" size="lg" onClick={(e) => {
+        e.preventDefault();
+        //getSingleBuilding(match.params._id);
+        //sendVentArray(vent, building._id);
+        sendMeasuresArray(measures, building._id);
+        console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+        sendVentArray(vent, building._id);
+        console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+      }}>Save Packages</Button>
+
+      <Link to={`/edit-building/${match.params._id}`} className='btn btn-light'>
+        <i className='fas fa-user-circle text-primary' /> Edit Building
+      </Link>
       <Tabs
         activeKey={actKey}
         onSelect={(k) => {
@@ -106,7 +132,7 @@ const SingleBuilding = ({
               to={`/add-untransparent/${match.params._id}`}
               className="btn btn-light"
             >
-              <i className="fas fa-chimney text-primary"></i> Add Untransparent
+              <i className="fas fa-chimney text-primary"></i> Add Non-transparent
               Element
             </Link>
           </div>
@@ -124,17 +150,25 @@ const SingleBuilding = ({
           )}
         </Tab>
 
-        {tabs.map((item, index) => {
+        {building && building.trans.length !== 0 && building.trans[0].meas.map((item, index) => {
+          //setTabs([...tabs, 1]);
           return (
-            <Tab
-              key={index}
-              eventKey={index}
-              title={"Paket" + (index + 1).toString()}
-            >
-              <Package building={building}></Package>
-            </Tab>
-          );
+            <Tab key={index} eventKey={index} title={"Paket" + (index + 1).toString()}><Package building={building} packageNum={index + 1}></Package></Tab>
+          )
         })}
+        {building && building.trans.length !== 0 && tabs.map((item, index) => {
+          if (index >= building.trans[0].meas.length)
+            return (
+              <Tab
+                key={index}
+                eventKey={index}
+                title={"Paket" + (index + 1).toString()}
+              >
+                <Package building={building} packageNum={index + 1}></Package>
+              </Tab>
+            );
+        })}
+
         <Tab eventKey="new" title="+"></Tab>
       </Tabs>
     </Fragment>
@@ -155,6 +189,8 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getSingleBuilding,
   clearSingleBuilding,
+  sendMeasuresArray,
+  sendVentArray,
   getAllTransMes,
   getAllUntransMeas,
 })(SingleBuilding);

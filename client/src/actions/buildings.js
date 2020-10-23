@@ -8,6 +8,8 @@ import {
   GET_SINGLE_BUILDING,
   CLEAR_SINGLE_BUILDING,
   UPDATE_BUILDING,
+  ADD_MEASURES_ARRAY,
+  SET_VENT
 } from "./types";
 
 export const getBuildings = () => async (dispatch) => {
@@ -60,7 +62,10 @@ export const getSingleBuilding = (id) => async (dispatch) => {
 export const addBuilding = (formData) => async (dispatch) => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      //    "Content-Type": "application/json",
+      // 'Content-Type': 'multipart/form-data'
+      //'Accept': 'application/json',
+      'Content-Type': 'multipart/form-data',
     },
   };
 
@@ -199,4 +204,73 @@ export const deleteUnTransEl = (build_id, untrans_id) => async (dispatch) => {
       payload: { msg: err.message },
     });
   }
+};
+
+export const addMeasuresArray = (measuresArrayTrans, measuresArrayUnTrans, packageNum) => (dispatch) => {
+  dispatch({
+    type: ADD_MEASURES_ARRAY,
+    payload: {
+      arrTrans: measuresArrayTrans,
+      arrUnTrans: measuresArrayUnTrans,
+      num: packageNum
+    }
+  });
+}
+
+export const sendMeasuresArray = (measures, id) => async (dispatch) => {
+  console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  try {
+    const res = await axios.post(`/api/buildings/me/packages/${id}`, measures, config);
+    console.log(res.data);
+    /* dispatch({
+      type: GET_SINGLE_BUILDING,
+      payload: res.data,
+    }); */
+
+  } catch (err) {
+    dispatch({
+      type: BUILDINGS_ERROR,
+      payload: { msg: err.message },
+    });
+  }
+
+};
+
+export const sendVentArray = (vent, id) => async (dispatch) => {
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", vent);
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  try {
+    const res = await axios.post(`/api/buildings/me/vent/${id}`, vent, config);
+    console.log(res.data);
+    dispatch({
+      type: UPDATE_BUILDING,
+      payload: res.data,
+    });
+
+  } catch (err) {
+    dispatch({
+      type: BUILDINGS_ERROR,
+      payload: { msg: err.message },
+    });
+  }
+
+};
+
+
+export const setVentCoeff = (ven, packageNum) => (dispatch) => {
+  dispatch({
+    payload: { ven, packageNum },
+    type: SET_VENT,
+  });
 };

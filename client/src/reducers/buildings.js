@@ -6,10 +6,14 @@ import {
   GET_SINGLE_BUILDING,
   CLEAR_SINGLE_BUILDING,
   UPDATE_BUILDING,
+  ADD_MEASURES_ARRAY,
+  SET_VENT
 } from "../actions/types";
 
 const initialState = {
+  vent: [],
   buildings: [],
+  measures: [],
   building: null,
   loading: true,
   error: {},
@@ -19,6 +23,25 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case SET_VENT:
+      let arrVent;
+      if (state.vent.findIndex((item) => item.packageNum === payload.packageNum) === -1) {
+        arrVent = [...state.vent, payload]
+      } else {
+        arrVent = state.vent.map((item) => {
+          if (item.packageNum === payload.packageNum) {
+            return {
+              ven: payload.ven,
+              packageNum: payload.packageNum
+            }
+          } else return item;
+        })
+      }
+      return {
+        ...state,
+        vent: arrVent
+
+      };
     case GET_BUILDINGS:
       return {
         ...state,
@@ -52,6 +75,27 @@ export default function (state = initialState, action) {
       return {
         ...state,
         building: null,
+        measures: []
+      };
+    case ADD_MEASURES_ARRAY:
+      let arr;
+      if (state.measures.findIndex((item) => item.num === payload.num) === -1) {
+        arr = [...state.measures, payload]
+      } else {
+        arr = state.measures.map((item) => {
+          if (item.num === payload.num) {
+            return {
+              arrTrans: payload.arrTrans,
+              arrUnTrans: payload.arrUnTrans,
+              num: payload.num
+            }
+          } else return item;
+        })
+      }
+      return {
+        ...state,
+        measures: arr
+
       };
     default:
       return state;

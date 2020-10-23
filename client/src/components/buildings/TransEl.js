@@ -2,13 +2,22 @@ import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { deleteTransEl } from "../../actions/buildings";
+import { Semafor } from "./Semafor";
 
 const TransEl = ({ element, buildingId, deleteTransEl }) => {
   const elements = element.map((el) => (
     <tr key={el._id}>
       <td>{el.tip}</td>
       <td>{el.opis}</td>
-      <td>{el.uValue}</td>
+      <td
+        className={
+          Semafor.find((item) => item.name === el.tip).pos <= el.uValue
+            ? "semafor"
+            : {}
+        }
+      >
+        {el.uValue}
+      </td>
       <td>{el.povI + el.povZ + el.povS + el.povJ}</td>
       <td>{el.fFactor}</td>
       <td>{el.g}</td>
@@ -20,7 +29,7 @@ const TransEl = ({ element, buildingId, deleteTransEl }) => {
           Delete
         </button>
       </td>
-    </tr>
+    </tr >
   ));
 
   return (

@@ -9,6 +9,7 @@ const BuildingSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  image: { type: String },
   zap: {
     type: Number,
     required: true,
@@ -32,6 +33,7 @@ const BuildingSchema = new mongoose.Schema({
       povJ: Number,
       fFactor: Number,
       g: Number,
+      meas: []
     },
   ],
   neTrans: [
@@ -43,7 +45,15 @@ const BuildingSchema = new mongoose.Schema({
       povZ: Number,
       povS: Number,
       povJ: Number,
+      meas: []
     },
+  ],
+  packageVent: [
+    {
+      ven: Number,
+      packageNum: Number
+
+    }
   ],
   vent: {
     type: Number,

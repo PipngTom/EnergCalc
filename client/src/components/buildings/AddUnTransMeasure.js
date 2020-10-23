@@ -19,24 +19,40 @@ const AddUnTransMeasure = ({ addUnTransMeasure, history }) => {
 
   return (
     <Fragment>
-      <h1 className="large text-primary">Add An UnTransparent Measure</h1>
+      <h1 className="large text-primary">Add An Intransparent Measure</h1>
       <small>* = required field</small>
       <form
         className="form"
         onSubmit={(e) => {
           e.preventDefault();
-          addUnTransMeasure(formData, history);
+          addUnTransMeasure(formData);
+          history.push("/measures");
         }}
       >
         <div className="form-group">
           <select name="tip" value={tip} onChange={(e) => onChange(e)}>
             <option value="0">* Type of Element</option>
             <option value="Spoljni zid">Spoljni zid</option>
+            <option value="Zid prema negrejanom prostoru">
+              Zid prema negrejanom prostoru
+            </option>
             <option value="Medjuspratna konstrukcija ispod negrejanog prostora">
               Medjuspratna konstrukcija ispod negrejanog prostora
             </option>
+            <option value="Medjuspratna konstrukcija iznad negrejanog prostora">
+              Medjuspratna konstrukcija iznad negrejanog prostora
+            </option>
             <option value="Pod na tlu">Pod na tlu</option>
             <option value="Zid u tlu">Zid u tlu</option>
+            <option value="Ravan krov iznad grejanog prostora">
+              Ravan krov iznad grejanog prostora
+            </option>
+            <option value="Kosi krov iznad grejanog prostora">
+              Kosi krov iznad grejanog prostora
+            </option>
+            <option value="Medjuspratna konstrukcija iznad otvorenog prolaza">
+              Medjuspratna konstrukcija iznad otvorenog prolaza
+            </option>
           </select>
         </div>
         <div className="form-group">

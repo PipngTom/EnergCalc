@@ -2,13 +2,22 @@ import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { deleteUnTransEl } from "../../actions/buildings";
 import PropTypes from "prop-types";
+import { Semafor } from "./Semafor";
 
 const UnTransEl = ({ element, buildingId, deleteUnTransEl }) => {
   const elements = element.map((el) => (
     <tr key={el._id}>
       <td>{el.tip}</td>
       <td>{el.opis}</td>
-      <td>{el.uValue}</td>
+      <td
+        className={
+          Semafor.find((item) => item.name === el.tip).pos <= el.uValue
+            ? "semafor"
+            : {}
+        }
+      >
+        {el.uValue}
+      </td>
       <td>{el.povI + el.povZ + el.povS + el.povJ}</td>
       <td>
         <button
@@ -23,7 +32,7 @@ const UnTransEl = ({ element, buildingId, deleteUnTransEl }) => {
 
   return (
     <Fragment>
-      <h2 className="my-2">UnTransparent Elements</h2>
+      <h2 className="my-2">Non-Transparent Elements</h2>
       <table className="table">
         <thead>
           <tr>

@@ -24,7 +24,8 @@ const AddTransMeasure = ({ addTransMeasure, history }) => {
         className="form"
         onSubmit={(e) => {
           e.preventDefault();
-          addTransMeasure(formData, history);
+          addTransMeasure(formData);
+          history.push("/measures");
         }}
       >
         <div className="form-group">

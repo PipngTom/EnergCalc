@@ -14,11 +14,15 @@ import Buildings from "./components/buildings/Buildings";
 import SingleBuilding from "./components/buildings/SingleBuilding";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import BuildingForm from "./components/buildings/BuildingForm";
+import EditBuilding from "./components/buildings/EditBuilding";
 import AddTransparentEl from "./components/buildings/AddTransparentEl";
 import AddUnTransparentEl from "./components/buildings/AddUnTransparentEl";
 import Measures from "./components/buildings/Measures";
 import AddTransMeasure from "./components/buildings/AddTransMeasure";
+import EditTransMeasure from "./components/buildings/EditTransMeasure";
+import EditUnTransMeasure from "./components/buildings/EditUnTransMeasure";
 import AddUnTransMeasure from "./components/buildings/AddUnTransMeasure";
+import Reports from "./components/reports/Reports"
 import "bootstrap/dist/css/bootstrap.min.css";
 
 if (localStorage.token) {
@@ -49,8 +53,28 @@ const App = () => {
               />
               <PrivateRoute
                 exact
+                path="/edit-building/:_id"
+                component={EditBuilding}
+              />
+              <PrivateRoute
+                exact
+                path="/edit-trans/:_id"
+                component={EditTransMeasure}
+              />
+              <PrivateRoute
+                exact
+                path="/edit-untrans/:_id"
+                component={EditUnTransMeasure}
+              />
+              <PrivateRoute
+                exact
                 path="/new-building"
                 component={BuildingForm}
+              />
+              <PrivateRoute
+                exact
+                path="/reports"
+                component={Reports}
               />
               <PrivateRoute
                 exact
