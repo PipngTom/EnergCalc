@@ -18,7 +18,7 @@ const UnTransEl = ({ element, buildingId, deleteUnTransEl }) => {
       >
         {el.uValue}
       </td>
-      <td>{el.povI + el.povZ + el.povS + el.povJ}</td>
+      <td>{(el.povI + el.povZ + el.povS + el.povJ).toFixed(2)}</td>
       <td>
         <button
           className="btn btn-danger"

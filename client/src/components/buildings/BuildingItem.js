@@ -27,7 +27,7 @@ const BuildingItem = ({ deleteBuilding, auth, building }) => {
                 Qhnd,rel: {building && (Qhint / building.pov).toFixed(2)} kWh/m
                 <sup>2</sup>a
               </p>
-              <p>Class of object: {klasa}</p>
+              <p>Class: {klasa}</p>
             </div>
             <Link
               to={`/single-building/${building._id}`}

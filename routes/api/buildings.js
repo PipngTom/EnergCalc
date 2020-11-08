@@ -47,7 +47,7 @@ router.post("/me", auth, fileUpload.single('image'), async (req, res) => {
 
     const newBuilding = new Building({
       user: req.user.id,
-      image: req.file.path,
+      image: req.file ? req.file.path : "",
       pov: req.body.pov,
       zap: req.body.zap,
       year: req.body.year,
@@ -63,7 +63,7 @@ router.post("/me", auth, fileUpload.single('image'), async (req, res) => {
       oldBuilding = await Building.findById(req.body._id);
       building = await Building.findByIdAndUpdate(req.body._id, {
         user: req.user.id,
-        image: req.file.path,
+        image: req.file ? req.file.path : oldBuilding.image,
         pov: req.body.pov,
         zap: req.body.zap,
         year: req.body.year,

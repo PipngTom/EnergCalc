@@ -18,7 +18,7 @@ const TransEl = ({ element, buildingId, deleteTransEl }) => {
       >
         {el.uValue}
       </td>
-      <td>{el.povI + el.povZ + el.povS + el.povJ}</td>
+      <td>{(el.povI + el.povZ + el.povS + el.povJ).toFixed(2)}</td>
       <td>{el.fFactor}</td>
       <td>{el.g}</td>
       <td>
