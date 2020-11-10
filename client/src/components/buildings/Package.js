@@ -41,11 +41,11 @@ const Package = ({ building, packageNum, addMeasuresArray, setVentCoeff }) => {
 
     setNewBuilding(newBuild);
 
-//    console.log("New Building: ", newBuild);
+    //    console.log("New Building: ", newBuild);
 
-//    console.log("Building: ", building);
-//    console.log("Package umber: ", packageNum);
-//    console.log("Id pairs Untrans: ", IdpairsUnTrans);
+    //    console.log("Building: ", building);
+    //    console.log("Package umber: ", packageNum);
+    //    console.log("Id pairs Untrans: ", IdpairsUnTrans);
 
     setRez(enerCalc(newBuild, vent));
   };
@@ -97,7 +97,7 @@ const Package = ({ building, packageNum, addMeasuresArray, setVentCoeff }) => {
           </Col>
         </Row>
         <Row>
-          <Col><b>Qhnd,rel za paket: {rez && (rez.Qhint/building.pov).toFixed(0)} kWh/m
+          <Col><b>Qhnd,rel za paket: {rez && (rez.Qhint / building.pov).toFixed(0)} kWh/m
                 <sup>2</sup></b></Col>
           <Col><b>Klasa za paket: {rez && rez.klasa} razred</b></Col>
           <Col>
@@ -107,7 +107,7 @@ const Package = ({ building, packageNum, addMeasuresArray, setVentCoeff }) => {
                 enerCalc(building).Qhint - rez.Qhint !== 0 &&
                 (
                   (sumUnTrans + sumTrans) /
-                  ((enerCalc(building).Qhint - rez.Qhint) * 0.067)
+                  ((enerCalc(building).Qhint - rez.Qhint) * 0.039)
                 ).toFixed(0)}{" "}
               {rez && enerCalc(building).Qhint - rez.Qhint !== 0 && "godina"}
             </b>

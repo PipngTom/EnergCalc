@@ -50,7 +50,7 @@ const PackageRep = ({ building, packageNum, addMeasuresArray, izv }) => {
         //        console.log("Building: ", building);
         //        console.log("Package umber: ", packageNum);
         //        console.log("Id pairs Untrans: ", IdpairsUnTrans);
-        setRez(enerCalc(newBuild));
+        setRez(enerCalc(newBuild, newBuild.packageVent.find((item) => item.packageNum === packageNum) ? newBuild.packageVent.find((item) => item.packageNum === packageNum).ven : newBuild.vent));
         if (izv) { setIzvestaj(true); }
     };
 
@@ -97,7 +97,7 @@ const PackageRep = ({ building, packageNum, addMeasuresArray, izv }) => {
                                     enerCalc(building).Qhint - rez.Qhint !== 0 &&
                                     (
                                         (sumUnTrans + sumTrans) /
-                                        ((enerCalc(building).Qhint - rez.Qhint) * 0.067)
+                                        ((enerCalc(building).Qhint - rez.Qhint) * 0.039)
                                     ).toFixed(0)}{" "}
                                 {rez && enerCalc(building).Qhint - rez.Qhint !== 0 && "godina"}
                             </b>
@@ -113,8 +113,8 @@ const PackageRep = ({ building, packageNum, addMeasuresArray, izv }) => {
                         return <div key={index}>Netrans {item.idMeas}</div>;
                     })}
             </div>)}
-            {izvestaj && (<Fragment><td>{(enerCalc(building).Qhint - rez.Qhint).toFixed(0)}</td><td>{((enerCalc(building).Qhint - rez.Qhint) * 0.067).toFixed(0)}</td>
-                <td>{rez.klasa}</td><td>{sumUnTrans + sumTrans}</td><td>{enerCalc(building).Qhint !== rez.Qhint && ((sumUnTrans + sumTrans) / ((enerCalc(building).Qhint - rez.Qhint) * 0.067)).toFixed(2)}</td></Fragment>)}
+            {izvestaj && (<Fragment><td>{(enerCalc(building).Qhint - rez.Qhint).toFixed(0)}</td><td>{((enerCalc(building).Qhint - rez.Qhint) * 0.039).toFixed(0)}</td>
+                <td>{rez.klasa}</td><td>{sumUnTrans + sumTrans}</td><td>{enerCalc(building).Qhint !== rez.Qhint && ((sumUnTrans + sumTrans) / ((enerCalc(building).Qhint - rez.Qhint) * 0.039)).toFixed(2)}</td></Fragment>)}
         </Fragment>
     );
 };
