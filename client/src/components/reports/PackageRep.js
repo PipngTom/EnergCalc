@@ -114,7 +114,7 @@ const PackageRep = ({ building, packageNum, addMeasuresArray, izv }) => {
                     })}
             </div>)}
             {izvestaj && (<Fragment><td>{(enerCalc(building).Qhint - rez.Qhint).toFixed(0)}</td><td>{((enerCalc(building).Qhint - rez.Qhint) * 0.039).toFixed(0)}</td>
-                <td>{rez.klasa}</td><td>{sumUnTrans + sumTrans}</td><td>{enerCalc(building).Qhint !== rez.Qhint && ((sumUnTrans + sumTrans) / ((enerCalc(building).Qhint - rez.Qhint) * 0.039)).toFixed(2)}</td></Fragment>)}
+                <td>{rez.klasa}</td><td>{(sumUnTrans + sumTrans).toFixed(0)}</td><td>{enerCalc(building).Qhint !== rez.Qhint && ((sumUnTrans + sumTrans) / ((enerCalc(building).Qhint - rez.Qhint) * 0.039)).toFixed(2)}</td></Fragment>)}
         </Fragment>
     );
 };

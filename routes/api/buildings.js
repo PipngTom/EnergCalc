@@ -205,7 +205,7 @@ router.delete("/me/trans/:build_id/:trans_id", auth, async (req, res) => {
 });
 
 router.post("/me/packages/:id", auth, async (req, res) => {
-  //console.log(req.body);
+  console.log(req.body);
   //console.log(req.params.id)
   const packages = req.body;
   //const { arrTrans, arrUnTrans, num } = req.body

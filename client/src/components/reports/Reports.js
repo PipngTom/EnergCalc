@@ -35,14 +35,10 @@ const Reports = ({
         <tr key={el._id + packageNum}>
             <td>{el.name}</td>
             <td>{el.pov}</td>
-            <td>{el.trans ? el.trans.filter((item) => item.tip === "Prozor" || item.tip === "Vrata").reduce((sum, record) => sum + record.povI + record.povZ + record.povS + record.povJ, 0).toFixed(2)
-
-
-                /*             ((sum, record) => {
-                                return (record.tip === "Prozor") ? record.povI + record.povZ + record.povS + record.povJ : sum
-                            }, 0
-                            ) */
-                : 0}</td>
+            <td>{el.trans ? el.trans.filter((item) => item.tip === "Prozor" || item.tip === "Vrata").reduce((sum, record) => sum + record.povI + record.povZ + record.povS + record.povJ, 0).toFixed(2) : 0}</td>
+            <td>{el.trans ? el.neTrans.filter((item) => item.tip === "Spoljni zid").reduce((sum, record) => sum + record.povI + record.povZ + record.povS + record.povJ, 0).toFixed(2) : 0}</td>
+            <td>{el.trans ? el.neTrans.filter((item) => item.tip === "Kosi krov iznad grejanog prostora" || item.tip === "Ravan krov iznad grejanog prostora" || item.tip === "Medjuspratna konstrukcija ispod negrejanog prostora").reduce((sum, record) => sum + record.povI + record.povZ + record.povS + record.povJ, 0).toFixed(2) : 0}</td>
+            <td>{el.trans ? el.neTrans.filter((item) => item.tip === "Pod na tlu" || item.tip === "Medjuspratna konstrukcija iznad negrejanog prostora").reduce((sum, record) => sum + record.povI + record.povZ + record.povS + record.povJ, 0).toFixed(2) : 0}</td>
             <td>{enerCalc(el).Qhint.toFixed(0)}</td>
             <td>{enerCalc(el).klasa}</td>
             <PackageRep key={el._id} building={el} packageNum={parseInt(packageNum)} izv={true}></PackageRep>
@@ -65,8 +61,11 @@ const Reports = ({
                 <thead>
                     <tr>
                         <th>Naziv objekta</th>
-                        <th>Povrsina</th>
+                        <th>Povrsina objekta</th>
                         <th>Povrsina Prozora i vrata</th>
+                        <th>Povrsina Zidova</th>
+                        <th>Povrsina Krovova</th>
+                        <th>Povrsina Podova</th>
                         <th className="hide-sm">Qhnd [kWh]</th>
                         <th className="hide-sm">Klasa</th>
                         <th className="hide-sm">Usteda u paketu {packageNum} [kWh]</th>

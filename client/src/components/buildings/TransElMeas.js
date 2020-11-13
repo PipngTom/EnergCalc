@@ -48,7 +48,7 @@ const TransElMeas = ({ element, measures, getSum, getUvalues, getIdpairs, packag
   }, [newPrices]);
 
   useEffect(() => {
-    console.log("PACKAGE NUMBERRRRRRR: ", packageNum)
+    // console.log("PACKAGE NUMBERRRRRRR: ", packageNum)
   }, [packageNum]);
 
   const onChange = (e, elIndex) => {
