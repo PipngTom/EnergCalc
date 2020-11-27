@@ -8,14 +8,14 @@ export const enerCalc = (building, vent = building.vent) => {
     { name: "Laki", value: 110000 },
   ];
   const clasaObjekta = [
-    { name: "A+", from: 0, to: 12 },
-    { name: "A", from: 12, to: 20 },
-    { name: "B", from: 20, to: 38 },
-    { name: "C", from: 38, to: 75 },
-    { name: "D", from: 75, to: 113 },
-    { name: "E", from: 113, to: 150 },
-    { name: "F", from: 150, to: 188 },
-    { name: "G", from: 188, to: 10000000 },
+    { name: "A+", from: 0, to: 10 },
+    { name: "A", from: 10, to: 18 },
+    { name: "B", from: 18, to: 35 },
+    { name: "C", from: 35, to: 70 },
+    { name: "D", from: 70, to: 105 },
+    { name: "E", from: 105, to: 140 },
+    { name: "F", from: 140, to: 175 },
+    { name: "G", from: 175, to: 10000000 },
   ];
   const zracenje = [
     { H: 88.94, J: 109.22, S: 29.16, I: 67.21, Z: 67.21 },
@@ -141,7 +141,7 @@ export const enerCalc = (building, vent = building.vent) => {
               zra.J * item.povJ +
               zra.S * item.povS +
               zra.Z * item.povZ) *
-              0.6075 *
+            0.6075 *
             item.uValue *
             0.6 *
             0.04;
@@ -159,7 +159,7 @@ export const enerCalc = (building, vent = building.vent) => {
               item.povJ +
               item.povS +
               item.povZ) *
-              0.6075 *
+            0.6075 *
             item.uValue *
             0.6 *
             0.04;
@@ -303,5 +303,5 @@ export const enerCalc = (building, vent = building.vent) => {
     return item.from < Qhint / building.pov && item.to >= Qhint / building.pov;
   }).name;
   // console.log(klasa);
-  return { Qhint: Qhint, klasa: klasa };
+  return { Qhint: Qhint, klasa: klasa, kw: (Ht + Hv) * 37.5 };
 };

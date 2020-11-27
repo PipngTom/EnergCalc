@@ -8,9 +8,9 @@ import PropTypes from "prop-types";
 import TransElMeas from "./TransElMeas";
 import UnTransElMeas from "./UnTransElMeas";
 import { enerCalc } from "./enerCalc";
-import { addMeasuresArray, setVentCoeff } from "../../actions/buildings";
+import { addMeasuresArray, clearMeasuresArray, setVentCoeff } from "../../actions/buildings";
 
-const Package = ({ building, packageNum, addMeasuresArray, setVentCoeff }) => {
+const Package = ({ building, packageNum, addMeasuresArray, clearMeasuresArray, setVentCoeff }) => {
   const [rez, setRez] = useState(null);
   const [vent, setVent] = useState(building.packageVent.find((item) => item.packageNum === packageNum) ? building.packageVent.find((item) => item.packageNum === packageNum).ven : building.vent);
 
@@ -21,7 +21,16 @@ const Package = ({ building, packageNum, addMeasuresArray, setVentCoeff }) => {
   const [IdpairsTrans, setIdpairsTrans] = useState(null);
   useEffect(() => {
     addMeasuresArray(IdpairsTrans, IdpairsUnTrans, packageNum);
+    console.log("transparentne mere: ", IdpairsTrans, "u paketu: ", packageNum)
+
   }, [IdpairsTrans, IdpairsUnTrans]);
+
+  useEffect(() => {
+    return () => {
+      console.log("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
+      clearMeasuresArray();
+    };
+  }, []);
 
   useEffect(() => {
     setRez(enerCalc(newBuild, vent));
@@ -133,4 +142,4 @@ Package.propTypes = {
   setVentCoeff: PropTypes.func.isRequired
 };
 
-export default connect(null, { addMeasuresArray, setVentCoeff })(Package);
+export default connect(null, { addMeasuresArray, clearMeasuresArray, setVentCoeff })(Package);

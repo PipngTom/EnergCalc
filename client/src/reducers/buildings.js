@@ -7,7 +7,9 @@ import {
   CLEAR_SINGLE_BUILDING,
   UPDATE_BUILDING,
   ADD_MEASURES_ARRAY,
-  SET_VENT
+  SET_VENT,
+  CLEAR_MEASURES_ARRAY,
+  CLEAR_VENT_ARRAY
 } from "../actions/types";
 
 const initialState = {
@@ -77,12 +79,22 @@ export default function (state = initialState, action) {
         building: null,
         measures: []
       };
+    case CLEAR_MEASURES_ARRAY:
+      return {
+        ...state,
+        measures: []
+      };
+    case CLEAR_VENT_ARRAY:
+      return {
+        ...state,
+        vent: []
+      };
     case ADD_MEASURES_ARRAY:
       let arr;
       if (state.measures.findIndex((item) => item.num === payload.num) === -1) {
-        arr = [...state.measures, payload]
+        arr = [...state.measures, payload] //ako je novootvoreni paket ubacuje se u state
       } else {
-        arr = state.measures.map((item) => {
+        arr = state.measures.map((item) => { //ako je postojeći traži ga po broju i ažurira mu mere
           if (item.num === payload.num) {
             return {
               arrTrans: payload.arrTrans,

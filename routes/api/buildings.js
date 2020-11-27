@@ -214,11 +214,12 @@ router.post("/me/packages/:id", auth, async (req, res) => {
 
   try {
     const building = await Building.findOne({ _id: req.params.id });
-    // console.log(building.trans);
+    console.log("transparentni elementi: ", building.trans);
     packages.map((item) => {//iteracija kroz paket
       item.arrTrans.map((el) => {//iteracija kroz transparentne elemente
-        console.log("Id elementa: ", el.idEl, "Id mere: ", el.idMeas);
+        console.log("Id trans elementa: ", el.idEl, "Id trans mere: ", el.idMeas);
         let addIndex = building.trans.map((item1) => item1._id).indexOf(el.idEl); //pronalazenje indeksa odgovarajuceg transparentnog elementa u zgradi
+        console.log("indeks transparentnog el: ", addIndex)
         let measIndex = building.trans[addIndex].meas.findIndex((item2) => item2.paket === item.num); //pronalazenje indexa objekta mere u nizu mera
         if (measIndex === -1)//ako u nizu mera ne pronadje onu sa tim brojem paketa
         {
@@ -244,8 +245,9 @@ router.post("/me/packages/:id", auth, async (req, res) => {
 
     packages.map((item) => {//iteracija kroz paket
       item.arrUnTrans.map((el) => {//iteracija kroz transparentne elemente
-        console.log("Id elementa: ", el.idEl, "Id mere: ", el.idMeas);
+        console.log("Id netrans elementa: ", el.idEl, "Id netrans mere: ", el.idMeas);
         let addIndex = building.neTrans.map((item1) => item1._id).indexOf(el.idEl); //pronalazenje indeksa odgovarajuceg transparentnog elementa u zgradi
+        console.log("indeks netransparentnog el: ", addIndex)
         let measIndex = building.neTrans[addIndex].meas.findIndex((item2) => item2.paket === item.num); //pronalazenje indexa objekta mere u nizu mera
         if (measIndex === -1)//ako u nizu mera ne pronadje onu sa tim brojem paketa
         {

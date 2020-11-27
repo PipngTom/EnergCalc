@@ -4,7 +4,8 @@ import {
   getSingleBuilding,
   clearSingleBuilding,
   sendMeasuresArray,
-  sendVentArray
+  sendVentArray,
+  clearVentArray
 } from "../../actions/buildings";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -20,6 +21,7 @@ import { getAllTransMes, getAllUntransMeas } from "../../actions/measures";
 const SingleBuilding = ({
   getSingleBuilding,
   clearSingleBuilding,
+  clearVentArray,
   sendMeasuresArray,
   sendVentArray,
   getAllTransMes,
@@ -38,7 +40,9 @@ const SingleBuilding = ({
     getAllUntransMeas();
 
     return () => {
+      clearVentArray();
       //  clearSingleBuilding();
+      //console.log(building);
     };
   }, [getSingleBuilding]);
 
@@ -59,7 +63,7 @@ const SingleBuilding = ({
         //getSingleBuilding(match.params._id);
         //sendVentArray(vent, building._id);
         sendMeasuresArray(measures, building._id);
-        console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+
         sendVentArray(vent, building._id);
         console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
       }}>Save Packages</Button>
@@ -189,6 +193,7 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getSingleBuilding,
   clearSingleBuilding,
+  clearVentArray,
   sendMeasuresArray,
   sendVentArray,
   getAllTransMes,

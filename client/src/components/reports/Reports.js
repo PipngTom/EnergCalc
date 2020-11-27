@@ -34,12 +34,13 @@ const Reports = ({
     const elements = buildings.map((el) => (
         <tr key={el._id + packageNum}>
             <td>{el.name}</td>
-            <td>{el.pov}</td>
-            <td>{el.trans ? el.trans.filter((item) => item.tip === "Prozor" || item.tip === "Vrata").reduce((sum, record) => sum + record.povI + record.povZ + record.povS + record.povJ, 0).toFixed(2) : 0}</td>
+            {/* <td>{el.pov}</td>
+            <td>{el.trans ? el.trans.filter((item) => (item.tip === "Prozor" || item.tip === "Vrata") && item.uValue > 1.5).reduce((sum, record) => sum + record.povI + record.povZ + record.povS + record.povJ, 0).toFixed(2) : 0}</td>
             <td>{el.trans ? el.neTrans.filter((item) => item.tip === "Spoljni zid").reduce((sum, record) => sum + record.povI + record.povZ + record.povS + record.povJ, 0).toFixed(2) : 0}</td>
             <td>{el.trans ? el.neTrans.filter((item) => item.tip === "Kosi krov iznad grejanog prostora" || item.tip === "Ravan krov iznad grejanog prostora" || item.tip === "Medjuspratna konstrukcija ispod negrejanog prostora").reduce((sum, record) => sum + record.povI + record.povZ + record.povS + record.povJ, 0).toFixed(2) : 0}</td>
-            <td>{el.trans ? el.neTrans.filter((item) => item.tip === "Pod na tlu" || item.tip === "Medjuspratna konstrukcija iznad negrejanog prostora").reduce((sum, record) => sum + record.povI + record.povZ + record.povS + record.povJ, 0).toFixed(2) : 0}</td>
+            <td>{el.trans ? el.neTrans.filter((item) => item.tip === "Pod na tlu" || item.tip === "Medjuspratna konstrukcija iznad negrejanog prostora").reduce((sum, record) => sum + record.povI + record.povZ + record.povS + record.povJ, 0).toFixed(2) : 0}</td> */}
             <td>{enerCalc(el).Qhint.toFixed(0)}</td>
+            <td>{(enerCalc(el).kw / 1000).toFixed(1)}</td>
             <td>{enerCalc(el).klasa}</td>
             <PackageRep key={el._id} building={el} packageNum={parseInt(packageNum)} izv={true}></PackageRep>
         </tr>
@@ -56,23 +57,26 @@ const Reports = ({
                 <option value="3">Paket 3</option>
                 <option value="4">Paket 4</option>
                 <option value="5">Paket 5</option>
+                <option value="6">Paket 6</option>
             </select>
             <table className="table">
                 <thead>
                     <tr>
                         <th>Naziv objekta</th>
-                        <th>Povrsina objekta</th>
+                        {/* <th>Povrsina objekta</th>
                         <th>Povrsina Prozora i vrata</th>
                         <th>Povrsina Zidova</th>
                         <th>Povrsina Krovova</th>
-                        <th>Povrsina Podova</th>
+                        <th>Povrsina Podova</th> */}
                         <th className="hide-sm">Qhnd [kWh]</th>
+                        <th className="hide-sm">Snaga [kW]</th>
                         <th className="hide-sm">Klasa</th>
                         <th className="hide-sm">Usteda u paketu {packageNum} [kWh]</th>
                         <th className="hide-sm">Usteda u paketu {packageNum} [EUR]</th>
                         <th className="hide-sm">Klasa u paketu {packageNum}</th>
                         <th className="hide-sm">Investicija za paket {packageNum} [EUR]</th>
                         <th className="hide-sm">Period povrata za paket {packageNum} [GOD]</th>
+                        <th className="hide-sm">Snaga za paket {packageNum} [kW]</th>
                     </tr>
                 </thead>
                 <tbody>{elements}</tbody>

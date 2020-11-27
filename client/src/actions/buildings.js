@@ -9,7 +9,9 @@ import {
   CLEAR_SINGLE_BUILDING,
   UPDATE_BUILDING,
   ADD_MEASURES_ARRAY,
-  SET_VENT
+  SET_VENT,
+  CLEAR_MEASURES_ARRAY,
+  CLEAR_VENT_ARRAY
 } from "./types";
 
 export const getBuildings = () => async (dispatch) => {
@@ -216,6 +218,17 @@ export const addMeasuresArray = (measuresArrayTrans, measuresArrayUnTrans, packa
     }
   });
 }
+export const clearMeasuresArray = () => (dispatch) => {
+  dispatch({
+    type: CLEAR_MEASURES_ARRAY,
+  });
+};
+
+export const clearVentArray = () => (dispatch) => {
+  dispatch({
+    type: CLEAR_VENT_ARRAY,
+  });
+};
 
 export const sendMeasuresArray = (measures, id) => async (dispatch) => {
   console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
